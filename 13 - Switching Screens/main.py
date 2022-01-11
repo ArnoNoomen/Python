@@ -10,6 +10,17 @@ ScreenManager:
     UploadScreen:
 
 <MenuScreen>:
+    name: 'menu1'
+    MDRectangleFlatButton:
+        text: 'Profile1'
+        pos_hint: {'center_x':0.5,'center_y':0.6}
+        on_press: root.manager.current = 'profile'
+    MDRectangleFlatButton:
+        text: 'Upload'
+        pos_hint: {'center_x':0.5,'center_y':0.5}
+        on_press: root.manager.current = 'upload'
+
+<MenuScreen>:
     name: 'menu'
     MDRectangleFlatButton:
         text: 'Profile'
@@ -38,7 +49,7 @@ ScreenManager:
     MDRectangleFlatButton:
         text: 'Back'
         pos_hint: {'center_x':0.5,'center_y':0.1}
-        on_press: root.manager.current = 'menu'
+        on_press: root.manager.current = 'menu1'
         
 """
 
