@@ -1,31 +1,71 @@
-BoxLayout:
-    orientation: 'vertical'
-    MDToolbar:
-        title: "Demo MDBottomNavigation"
-        md_bg_color: app.theme_cls.primary_color
-    MDBottomNavigation:
-        MDBottomNavigationItem:
-            text: "screen1"
-            name: "screen1"
-            icon: "minus"
-            BoxLayout:
+Screen:
+    id: screen
+    BoxLayout:
+        orientation: 'vertical'
+        MDToolbar:
+            title: "Demo MDBottomNavigation"
+            md_bg_color: app.theme_cls.primary_color
+        MDBottomNavigation:
+            MDBottomNavigationItem:
+                text: "screen1"
+                name: "screen1"
+                icon: "minus"
+                BoxLayout:
+                    Button:
+                    Button:
+                    Button:
+            MDBottomNavigationItem:
+                text: "screen2"
+                name: "screen2"
+                icon: "plus"
+                BoxLayout:
+                    orientation: 'vertical'
+                    Button:
+                    Button:
+                    Button:
+            MDBottomNavigationItem:
+                text: "screen3"
+                name: "screen3"
+                icon: "music"
+                MDTextField:
+                    id: numeric
+                    focus: True
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    helper_text: "Alleen numbers toestaan"
+                    helper_text_mode: "on_focus" # persitent verdwijnt text bij input
+                    width: 20
+                    font_size: 48
+                    on_text_validate: screen_inlog.on_enter_user
                 Button:
-                Button:
-                Button:
-        MDBottomNavigationItem:
-            text: "screen2"
-            name: "screen2"
-            icon: "plus"
-            BoxLayout:
-                orientation: 'vertical'
-                Button:
-                Button:
-                Button:
-        MDBottomNavigationItem:
-            text: "screen3"
-            name: "screen3"
-            icon: "music"
-            BoxLayout:
-                orientation: 'vertical'
-                Button:
-                Button:
+                    text: 'OK'
+                    size_hint: ( 0.35 , 0.10)
+                    pos_hint: {"center_x": .5, "center_y": .3}
+            MDBottomNavigationItem:
+                text: "screen4"
+                name: "screen4"
+                BoxLayout:
+                    MDLabel:
+                        text: 'menu'
+                        halign: 'center'
+                    MDRectangleFlatButton:
+                        text: 'Oke'
+                        pos_hint: {'center_x':0.5,'center_y':0.5 }
+                        #on_press: root.manager.current = 'profile'
+                        on_press: app.popup1()
+                    MDRectangleFlatButton:
+                        text: 'Close'
+                        pos_hint: {'center_x':0.5,'center_y':0.5 }
+                        on_press: app.close()
+            MDBottomNavigationItem:
+                text: "screen5"
+                name: "screen5"
+                BoxLayout:
+                    MDTextField:
+                        hint_text: "Enter username"
+                        helper_text: "or click on forgot username"
+                        helper_text_mode: "on_focus"
+                        icon_right: "android"
+                        icon_right_color: app.theme_cls.primary_color
+                        pos_hint:{'center_x': 0.5, 'center_y': 0.5}
+                        size_hint_x:None
+                        width:300
