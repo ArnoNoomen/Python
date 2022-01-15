@@ -1,7 +1,7 @@
 from kivymd.app import MDApp
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
-from kivymd.uix.expansionpanel import MDExpansionPanel
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivy.uix.boxlayout import BoxLayout
 
 class MyContent(BoxLayout):
@@ -17,10 +17,13 @@ class MainApp(MDApp):
         popup.open()
 
     def on_start(self):
-        names = ['Option 1', 'Option 2', , 'Option 3']
+        names = ["Option 1", "Option 2", "Option 3"]
 
         for name in names:
-            panel = MDExpansionPanel(title=name, content=MyContent())
+            print(name)
+            panel = MDExpansionPanel(
+                content=MyContent(),
+                panel_cls=MDExpansionPanelOneLine(text=name))
             self.root.ids.panel_container.add_widget(panel)
 
 MainApp().run()
