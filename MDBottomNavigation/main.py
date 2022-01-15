@@ -1,10 +1,12 @@
 from kivymd.app import MDApp
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
-from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivy.uix.boxlayout import BoxLayout
+from kivy.properties import ObjectProperty
+from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.menu import MDDropdownMenu
 
 class MyContent(BoxLayout):
     pass
@@ -15,6 +17,7 @@ popup = Popup(title='Test popup',
 )
 class MainApp(MDApp):
     dialog = None
+    dropdown = None
 
     def popup1(self):
         popup.open()
@@ -39,13 +42,21 @@ class MainApp(MDApp):
         self.dialog.open()
 
     def on_start(self):
+        self.dropdown = MDDropdownMenu(width_mult=4)
+        print(self.dropdown)
+        for i in range(6):
+            self.dropdown.items.append(
+                {"viewclass":"MDMenuItem","text":"Option " + str(i), "callback": self.option_callback}
+            )
         names = ["Option 1", "Option 2", "Option 3"]
 
         for name in names:
-            print(name)
             panel = MDExpansionPanel(
                 content=MyContent(),
                 panel_cls=MDExpansionPanelOneLine(text=name))
             self.root.ids.panel_container.add_widget(panel)
+
+    def option_callback(self, text_of_the_option):
+        print(text_of_the_option)
 
 MainApp().run()
