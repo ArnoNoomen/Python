@@ -90,3 +90,12 @@ Screen:
                             cols: 1
                             size_hint_y: None
                             height: self.minimum_height
+            MDBottomNavigationItem:
+                text: "screen7"
+                name: "screen7"
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDFlatButton:
+                        text: "ALERT DIALOG"
+                        pos_hint: {'center_x': .5, 'center_y': .5}
+                        on_release: app.show_alert_dialog()
