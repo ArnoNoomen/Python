@@ -69,3 +69,13 @@ Screen:
                         pos_hint:{'center_x': 0.5, 'center_y': 0.5}
                         size_hint_x:None
                         width:300
+            MDBottomNavigationItem:
+                text: "screen6"
+                name: "screen6"
+                BoxLayout:
+                    ScrollView:
+                        GridLayout:
+                            id: panel_container
+                            cols: 1
+                            size_hint_y: None
+                            height: self.minimum_heigth
