@@ -27,23 +27,23 @@ Screen:
             md_bg_color: app.theme_cls.primary_color
             right_action_items: [["dots-vertical", lambda the_button: app.dropdown().open(the_button)]]
         MDBottomNavigation:
-            MDBottomNavigationItem:
-                text: "Scr1"
-                name: "Scr1"
-                icon: "minus"
-                BoxLayout:
-                    Button:
-                    Button:
-                    Button:
-            MDBottomNavigationItem:
-                text: "Scr2"
-                name: "Scr2"
-                icon: "plus"
-                BoxLayout:
-                    orientation: 'vertical'
-                    Button:
-                    Button:
-                    Button:
+        #    MDBottomNavigationItem:
+        #        text: "Scr1"
+        #        name: "Scr1"
+        #        icon: "minus"
+        #        BoxLayout:
+        #            Button:
+        #            Button:
+        #            Button:
+        #    MDBottomNavigationItem:
+        #        text: "Scr2"
+        #        name: "Scr2"
+        #        icon: "plus"
+        #        BoxLayout:
+        #            orientation: 'vertical'
+        #            Button:
+        #            Button:
+        #            Button:
             MDBottomNavigationItem:
                 text: "Scr3"
                 name: "Scr3"
@@ -65,6 +65,7 @@ Screen:
                 text: "Scr4"
                 name: "Scr4"
                 BoxLayout:
+                    orientation: 'vertical'
                     MDLabel:
                         text: 'menu'
                         halign: 'center'
