@@ -11,8 +11,11 @@
 
 <SpecialGridLayout@GridLayout>
     cols: 1
-    Label:
-        text: "Special Label"
+    MDLabel:
+        text: "Hello world"
+        halign: "center"
+        theme_text_color: "Error"
+        font_style: "Subtitle2"
         id: special_label
 
 Screen:
@@ -117,7 +120,7 @@ Screen:
                             id: my_textinput
                         Button:
                             on_release:
-                                # special_gridlayout.ids.special_label.text = my_textinput.text
+                                special_gridlayout.ids.special_label.text = my_textinput.text
                                 # app.print_ids(root.ids)
                                 print(my_textinput.text)
                                 print(mdlabel.text)
@@ -128,3 +131,5 @@ Screen:
                             halign: "center"
                             theme_text_color: "Error"
                             font_style: "Subtitle2"
+                        SpecialGridLayout:
+                            id: special_gridlayout
