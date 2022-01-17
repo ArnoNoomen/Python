@@ -34,6 +34,12 @@ class MainApp(MDApp):
     dialog = None
     dropdown = None
 
+    def check_text(self, text):
+        print(text)
+
+    def check_text1(self, text):
+        print(text)
+
     def print_ids(self, ii):
         print(ii)
 

@@ -61,9 +61,11 @@ Screen:
                         pos_hint:{"center_x":0.5,"y":0.3}
                         size_hint_x: 0.35
                     MDTextField:
+                        id: field4
                         hint_text: 'text invoeren'
                         pos_hint:{"center_x":-0.5,"y":0.2}
                         size_hint_x: 0.35
+                        on_text: app.check_text(field4.text), app.check_text1(field4.text)
                     #MDTextField:
                     #    id: numeric
                     #    input_filter: int                       
