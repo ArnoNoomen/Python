@@ -59,7 +59,14 @@ Screen:
                         size_hint_y: None
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
-                        on_text: app.check_text(field4.text), app.check_text1(field4.text), print('a')   
+                        on_text: app.check_text(field4.text), app.check_text1(field4.text), print('a')  
+                    MDFlatButton:
+                        text: "ALERT DIALOG"
+                        size_hint_x: None
+                        size_hint_y: None
+                        pos_hint:{"center_x":2,"y":2}
+                        height: 30
+                        on_release: app.show_alert_dialog() 
                     Widget: 
             MDBottomNavigationItem:
                 text: "Scr4"
@@ -101,15 +108,6 @@ Screen:
                             cols: 1
                             size_hint_y: None
                             height: self.minimum_height
-            MDBottomNavigationItem:
-                text: "Scr7"
-                name: "Scr7"
-                BoxLayout:
-                    orientation: 'vertical'
-                    MDFlatButton:
-                        text: "ALERT DIALOG"
-                        pos_hint: {'center_x': .5, 'center_y': .5}
-                        on_release: app.show_alert_dialog()
             MDBottomNavigationItem:
                 text: "Scr8"
                 name: "Scr8"
