@@ -9,6 +9,12 @@
     Button:
         size_hint: None, None
 
+<SpecialGridLayout@GridLayout>
+    cols: 1
+    Label:
+        text: "Special Label"
+        id: special_label
+
 Screen:
     id: screen
     BoxLayout:
@@ -105,8 +111,16 @@ Screen:
                 name: "Scr8"
                 BoxLayout:
                     orientation: 'vertical'
-                    Button:
-                        text: 'OK'
-                        size_hint: ( 0.35 , 0.10)
-                        pos_hint: {"center_x": .5, "center_y": .3}
-                        on_release: app.print_ids(root.ids)
+                    GridLayout:
+                        rows: 1
+                        TextInput:
+                            id: my_textinput
+                        Button:
+                            on_release:
+                                # special_gridlayout.ids.special_label.text = my_textinput.text
+                                # app.print_ids(root.ids)
+                                print(my_textinput.text)
+                                print(special_gridlayout.ids.special_label.text)
+                                app.set_text(my_textinput.text)
+                        SpecialGridLayout:
+                            id: special_gridlayout
