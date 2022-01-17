@@ -2,11 +2,13 @@ from kivymd.app import MDApp
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from kivy.properties import ObjectProperty
+from kivy.uix.textinput import TextInput
+from kivy.properties import ObjectProperty, NumericProperty, StringProperty
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelOneLine
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.textfield import MDTextField
 
 class MyContent(BoxLayout):
     pass
@@ -15,6 +17,19 @@ popup = Popup(title='Test popup',
     content=Label(text='Hello world'),
     size_hint=(None, None), size=(400, 400)
 )
+
+class MDTextFieldPersian(MDTextField):
+    max_chars = NumericProperty(5)  # maximum character allowed
+    str = StringProperty()
+
+    def __init__(self, **kwargs):
+        super(MDTextFieldPersian, self).__init__(**kwargs)
+        self.text = "hallo"
+
+    def insert_text(self, substring, from_undo=False):
+        print(substring)
+        return
+
 class MainApp(MDApp):
     dialog = None
     dropdown = None
@@ -27,6 +42,10 @@ class MainApp(MDApp):
         self.root.ids.mdlabel.text = text
         # self.root.ids.special_gridlayout.ids.special_label.text ?
         print(self.root.ids.mdlabel.text)
+
+    def set_error_message(self, instance_textfield):
+        print(instance_textfield)
+        self.screen.ids.text_field_error.error = True
 
     def popup1(self):
         popup.open()

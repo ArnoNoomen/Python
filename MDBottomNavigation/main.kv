@@ -18,6 +18,13 @@
         font_style: "Subtitle2"
         id: special_label
 
+<MDTextFieldPersian@MDTextField>:
+    multiline: 0
+    size_hint: 1,1
+    font_size: 20
+    padding_y: [15,0] # can be changed
+    padding_x: [self.size[0]-self._get_text_width(max(self._lines, key=len), self.tab_width, self._label_cached)-10,8]
+
 Screen:
     id: screen
     BoxLayout:
@@ -27,40 +34,56 @@ Screen:
             md_bg_color: app.theme_cls.primary_color
             right_action_items: [["dots-vertical", lambda the_button: app.dropdown().open(the_button)]]
         MDBottomNavigation:
-        #    MDBottomNavigationItem:
-        #        text: "Scr1"
-        #        name: "Scr1"
-        #        icon: "minus"
-        #        BoxLayout:
-        #            Button:
-        #            Button:
-        #            Button:
-        #    MDBottomNavigationItem:
-        #        text: "Scr2"
-        #        name: "Scr2"
-        #        icon: "plus"
-        #        BoxLayout:
-        #            orientation: 'vertical'
-        #            Button:
-        #            Button:
-        #            Button:
             MDBottomNavigationItem:
                 text: "Scr3"
                 name: "Scr3"
                 icon: "music"
-                MDTextField:
-                    id: numeric
-                    focus: True
-                    pos_hint: {"center_x": .5, "center_y": .5}
-                    helper_text: "Alleen numbers toestaan"
-                    helper_text_mode: "on_focus" # persitent verdwijnt text bij input
-                    width: 20
-                    font_size: 48
-                    on_text_validate: screen_inlog.on_enter_user
-                Button:
-                    text: 'OK'
-                    size_hint: ( 0.35 , 0.10)
-                    pos_hint: {"center_x": .5, "center_y": .3}
+                BoxLayout:
+                    orientation: 'vertical'
+                    #padding: "10dp"
+                    #height: "40dp"
+                    #size_hint_y: None
+                    MDTextFieldPersian:
+                        id: text_field_error
+                        focus: True
+                        required: True
+                        max_text_length: 5
+                        #mode: "rectangle"
+                        #hint_text: "Alleen numbers toestaan"
+                        #helper_text: "There will always be a mistake"
+                        #helper_text_mode: "on_error"
+                        #pos_hint: {"center_y": .5}
+                        hint_text:"Enter Name"
+                        pos_hint:{'center_x':.5,'center_y':.2}
+                        size_hint:1,None
+                        height:"50dp"
+                    MDTextField:
+                        id: text_field_error
+                        focus: True
+                        required: True
+                        max_text_length: 5
+                        #mode: "rectangle"
+                        #hint_text: "Alleen numbers toestaan"
+                        #helper_text: "There will always be a mistake"
+                        #helper_text_mode: "on_error"
+                        #pos_hint: {"center_y": .5}
+                        hint_text:"Enter Name"
+                        pos_hint:{'center_x':.5,'center_y':.2}
+                        size_hint:1,None
+                        height:"50dp"
+                    #MDTextField:
+                    #    id: numeric
+                    #    input_filter: int                       
+                    #    pos_hint: {"center_x": .5, "center_y": .5}
+                    #    helper_text: "Alleen numbers toestaan"
+                    #    helper_text_mode: "on_focus" # persitent verdwijnt text bij input
+                    #    width: 20
+                    #    font_size: 48
+                    #    on_text_validate: screen_inlog.on_enter_user
+                    #Button:
+                    #    text: 'OK'
+                    #    size_hint: ( 0.35 , 0.10)
+                    #    pos_hint: {"center_x": .5, "center_y": .3}
             MDBottomNavigationItem:
                 text: "Scr4"
                 name: "Scr4"
