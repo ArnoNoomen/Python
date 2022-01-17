@@ -1,266 +1,365 @@
-from kivy.uix.behaviors import button
+import os
+import re
 from kivymd.app import MDApp
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-import helpers
+from kivymd.uix.list import OneLineListItem, IconLeftWidget, MDList
 from kivy.lang import Builder
-from kivymd.uix.list import OneLineListItem, MDList, TwoLineListItem, ThreeLineListItem
-from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
-from kivymd.uix.button import MDFlatButton
-from kivy.uix.scrollview import ScrollView
 from kivy.core.window import Window
+from kivymd.uix.card import MDCard
+from kivy.uix.scrollview import ScrollView
+from kivy.properties import StringProperty, NumericProperty, \
+    BooleanProperty, AliasProperty, OptionProperty, \
+    ListProperty, ObjectProperty, VariableListProperty, ColorProperty
 from kivymd.uix.datatables import MDDataTable
-from kivymd.uix.dialog import MDDialog
 from kivy.metrics import dp
-from kivy.event import EventDispatcher
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 
-class WindowManager(ScreenManager):
-    pass
-
-class Toolbar():
-    def navigation_draw():
-        print ('jaja')
-
-class Login(Screen):
-
-    def handle_ok(self, *args): 
-        print ( self.root.ids )
-        close_button = MDFlatButton(text="Close",on_release=Login.close_dialog)
-        more_button = MDFlatButton(text="More")
-        dialog = MDDialog( text= 'jaja1' ,
-                           buttons=[ close_button ]
-                         )
-        
-    def close_dialog(self):
-        self.parent.parent.parent.parent.dismiss()
-
-    def handle_ok_cancel(self, *arg):
-        exit()
- 
-class Info(Screen):
-       
-    def handle_ok(self, *arg):
-        # sm.transition.direction = ""
-        sm.current = 'Dock'
-
-    def handle_ok_cancel(self, *arg):
-        sm.current = 'Login'
+# https://www.youtube.com/watch?v=sa4AVMjjzNo
+Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
+Window.softinput_mode = 'below_target'
+# Window.size = (450, 740)
 
 
-class Article(Screen):
-       
-    def handle_ok(self, *arg):
-        pass
+KV = """
+#:import Clock kivy.clock.Clock
 
-    def handle_ok_cancel(self, *arg):
-        sm.current = 'Dock'
-
-
-class Articlelist(Screen):
-       
-    def handle_ok(self, *arg):
-        pass
-
-    def handle_ok_cancel(self, *arg):
-        sm.current = 'Info'
-
-    def on_row_press(self, *arg):
-        pass
-
-    def on_check_press(self, *arg):
-        pass
-
-class Dock(Screen):
-       
-    def handle_ok(self, *arg):
-        sm.current = 'Article'
-
-    def handle_ok_cancel(self, *arg):
-        sm.current = 'Info'
-  
-class DemoApp(MDApp):
+Screen:
     
+    MDToolbar:
+        id: toolbar
+        pos_hint: {"top": 1}
+        title: 'Bol handheld'
+        elevation: 0
+        left_action_items: [["menu", lambda x: nav_drawer.set_state('toggle')]]
+
+    MDNavigationLayout:  
+        x: toolbar.height 
+         
+        ScreenManager:
+            
+            id: screen_manager
+
+            Screen_inlog:
+                id: screen_inlog
+                name: 'inlog'
+                userId: user   
+                BoxLayout:
+                    
+                    orientation: 'vertical'
+                    padding: 50
+                    
+                    Widget:
+                     
+                    MDIcon:
+                        icon: 'account'
+                        icon_color: 1, 0, 1, 1
+                        font_size: 180
+                        markup: True
+                        halign: 'center'
+                    # MDTextFieldRound:    
+                    MDTextField:
+                        id: user
+                        focus: True
+                        pos_hint: {"center_x": .5 }
+                        helper_text: "Username"
+                        helper_text_mode: "on_focus" # persitent verdwijnt text bij input
+                        width: 20
+                        font_size: 48
+                        on_text_validate: screen_inlog.on_enter_user 
+                        
+                    MDTextField:
+                        id: passwd
+                        hint_text: "Password"
+                        pos_hint: {"center_x": .5 }
+                        width: 20
+                        font_size: 48           
+                        password: True
+                        
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        padding: 20
+                        Button:
+                            text: 'OK'
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3) 
+                                        
+            Screen_menu:
+                name: 'menu'
+                id: screen_menu
+                menuBoxObj: menuBox
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: menuBox
+                    padding: 20
+                    Widget:
+
+                    ScrollView:
+                        size_hint: None, None
+                        size: "400dp", "400dp"
+                        pos_hint: {"center_x": .5, "center_y": 1}
+                        MDList:
+                            OneLineListItem:
+                                text: "Unloading"
+                                    
+                            OneLineListItem:
+                                text: "Receiving"
+                                on_release: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "receiving"), .3)
+                                    
+                    # BoxLayout:
+                    #     orientation: 'horizontal'
+                    #     padding: 20
+                    #     Button:
+                    #         text: 'OK'
+                    #         size_hint_y: 1
+                    #     Button:
+                    #         text: 'Cancel'
+                    #         size_hint_y: 1
+                    #         on_release: Clock.schedule_once(lambda x: app.set_screen(screen_manager,"inlog"), .3)
+            
+            Screen_receiving:
+                name: 'receiving'
+                id: screen_receiving
+            
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: menuBox
+                    padding: 20
+                    Widget:
+
+                    MDTextField:
+                        id: receiveId
+                        hint_text: "Receive number"
+                        # pos_hint: {"center_x": .5 }
+                        width: 20
+                        font_size: 48 
+                        on_text_validate: screen_receiving.on_enter_receiveId
+                    MDLabel:
+                        text: "Receipts 0"
+                        font_style: "H3"
+                        size_hint_y: None
+                        height: '100dp'    
+                    ScrollView:
+                        # size_hint: None, None
+                        size: "350dp", "200dp"
+                        # pos_hint: {"center_x": .5, "center_y": 1.2}
+                        MDList:
+                            OneLineListItem:
+                                text: "DOCK 123"
+                            OneLineListItem:
+                                text: "DOCK 124"
+                            OneLineListItem:
+                                text: "DOCK 125"
+                            OneLineListItem:
+                                text: "DOCK 126"                
+                                    
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        padding: 20
+                        Button:
+                            text: 'OK'
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "article"), .3)
+                        Button:
+                            text: 'Cancel'
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
+
+
+            Screen_article:
+                name:  'article'
+                id: screen_article
+            
+                BoxLayout:
+                    orientation: 'vertical'
+                    id: menuBox
+                    numeric: 'articleid'
+                    padding: 20
+                    Widget:
+
+                    MDTextField:
+                        id: articleid
+                        icon_left: "account-check"
+                        hint_text: "Article"
+                        pos_hint: {"center_x": .5 }
+                        width: 50
+                        font_size: 48
+                        on_text: screen_article.num(self.text)
+                    MDLabel:
+                        text: "Selected:"
+                        font_style: "H4"
+                        size_hint_y: None
+                        height: '260dp'    
+                    # ScrollView:
+                    #     size_hint: None, None
+                    #     size: "350dp", "200dp"
+                    #     # pos_hint: {"center_x": .5, "center_y": 1.2}
+                    #     MDList:
+                    #         OneLineListItem:
+                    #             text: ""
+                    #         OneLineListItem:
+                    #             text: ""
+                    #         OneLineListItem:
+                    #             text: ""
+                    #         OneLineListItem:
+                    #             text: ""                
+                              
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        padding: 10
+                        Button:
+                            text: 'OK'
+                            size_hint_y: 1
+                        Button:
+                            text: 'List'
+                            size_hint_y: 1    
+                        Button:
+                            text: 'Cancel'
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
+    
+        MDNavigationDrawer:
+            id: nav_drawer
+            scrim_color: [0, 0, 0, 0.0]
+            elevation: 0
+
+            ContentNavigationDrawer:
+                orientation: 'vertical'
+                padding: "8dp"
+                spacing: "8dp"
+                Image:
+                    id: avatar
+                    size_hint: (.5,.5)
+                    source: "bol.png"
+                MDLabel:
+                    text: "Mobile App"
+                    font_style: "Subtitle1"
+                    size_hint_y: None
+                    height: self.texture_size[1]
+              
+                ScrollView:
+                    MDlist:
+                        id: md_list
+                        
+                        OneLineIconListItem:
+                            text: "Info"
+                            IconLeftWidget:
+                                icon: "information-outline"
+                                
+                        OneLineIconListItem:
+                            text: "Login"
+                            on_release: Clock.schedule_once(lambda x: app.set_screen_nav(screen_manager, nav_drawer, "inlog"), .3)
+                            IconLeftWidget:
+                                icon: "login"
+                                
+                        OneLineIconListItem:
+                            text: "Afsluiten"
+                            on_release: exit()
+                            IconLeftWidget:
+                                icon: "logout"
+                                    
+                              
+"""
+
+class ContentNavigationDrawer(BoxLayout):
+    pass
+class Screen_inlog(Screen):
+    userId = ObjectProperty()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+         
+        card = MDCard(orientation='vertical', pos_hint={
+                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .6))
+
+        # self.add_widget(card)
+
+    def handle_ok(self, screenLogin , manager, name_screen):
+        print( self.userId.text ) 
+        if self.userId.text != 'admin':
+            close_button = MDFlatButton (text="Close",on_press=Screen_inlog.close_dialog)
+            more_button = MDFlatButton(text="More")
+            dialog = MDDialog(   title = 'Authentification',
+                                 text='input:' + self.userId.text ,
+                                 size_hint=( .3, None),
+                                 buttons=[ close_button ]
+                            )
+            dialog.open()
+        else:
+            manager.current = name_screen
+    
+    def close_dialog(self):
+        # screen.dialog.dismiss()
+        self.parent.parent.parent.parent.dismiss() 
+
+    def on_enter_user( self ):
+        print ( self )    
+
+    def num(self, name):
+        if len(name) and name[-1] not in ('0123456789'):        
+            # fieldObj = self.root.ids.numeric 
+            # fieldObj.text = name.rstrip(name[-1])
+            self.root.ids.numeric.text = name.rstrip(name[-1]) 
+            
+
+class Screen_menu(Screen):
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+class Screen_receiving(Screen):
+    
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    
+    def on_enter_receiveId( self ):
+        print ( self )
+
+class Screen_article(Screen):
+    numeric = ObjectProperty()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+    def num(self, name):
+        # paul
+        if len(name) and name[-1] not in ('0123456789'):        
+            # fieldObj = self.root.ids.numeric 
+            # fieldObj.text = name.rstrip(name[-1])
+            
+            print ( self.parent.parent.parent.parent.root.ids.numeric )
+            # my_obj.text = name.rstrip(name[-1]) 
+
+# class nodig voor hamburgermenu
+class MDlist(MDList):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # voeg dynamic list item toe       
+        # self.add_widget(OneLineListItem( text= 'dynamic'))
+            
+class MainApp(MDApp):
+    userId = ObjectProperty()
+    menuBoxObj = ObjectProperty()
     def build(self):
         self.theme_cls.theme_style = "Light" 
         self.theme_cls.primary_palette = "Indigo"
         self.theme_cls.accent_palette = "Blue"
-        
-        #
-        # Login screen
-        #
-        screen_login = Screen()
-        screen_login.name = "Login"
 
-        toolbar_demo = Builder.load_string(helpers.toolbar_demo)
-        toolbar_demo.title = 'Inloggen'
-        screen_login.add_widget(toolbar_demo)
-        
-        test = Builder.load_string(helpers.KV)
-        screen_login.add_widget(test)
-
-        username = Builder.load_string(helpers.username_input)
-        screen_login.add_widget(username)
-        # username.bind(on_enter=Login.handle_username)
-        # username.bind(on_enter=lambda x:self.handle_username2(username))
-        
-        password = Builder.load_string(helpers.password_input)
-        screen_login.add_widget(password)
-        button_ok = Builder.load_string(helpers.button_ok)
-        # button_ok.bind(on_press=Login.handle_ok)    
-        button_ok.bind(on_press=lambda x:Login.handle_ok(username))
-         
-        screen_login.add_widget(button_ok)
-        button_cancel = Builder.load_string(helpers.button_cancel)
-        button_cancel.bind(on_press=Login.handle_ok_cancel) 
-        screen_login.add_widget(button_cancel)
-        
+        sm = ScreenManager()
+        sm.add_widget(Screen_menu(name='menu'))
     
-        #
-        # info screen
-        #
-        screen_info = Screen()
-        screen_info.name = "Info"
-        toolbar_demo = Builder.load_string(helpers.toolbar_demo)
-        screen_info.add_widget(toolbar_demo)
+        screen = Builder.load_string(KV)
+     
+        card = MDCard(orientation='vertical', pos_hint={
+                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .6))
+   
+        return screen
 
-        db_info = MDDataTable(  pos_hint={'center_x': 0.5, 'center_y': 0.5},
-                                size_hint=(0.9, 0.7),
-                                check=False,
-                                rows_num=10,
-                                column_data=[
-                                     ("Procedure", dp(80)),
-                                     ("Desc", dp(40))
-                                 ],
-                                 row_data=[
-                                     ("Unloading", "300"),
-                                     ("Receiving", "200"),
-                                     ("Receiving MDA", "200")
-                                 ]
-                                
-                                 )
-        db_info.bind(on_row_press=Articlelist.on_row_press)
-        db_info.bind(on_check_press=Articlelist.on_check_press)
-        screen_info.add_widget(db_info)
+    def set_screen_nav(self, manager, nav_drawer, name_screen):
+        manager.current = name_screen
+        nav_drawer.set_state("toggle")
+    def set_screen(self, manager, name_screen):
+        print ( name_screen )
+        manager.current = name_screen
+   
+   
 
-
-
-        # scroll = ScrollView()
-        # list_view = MDList( pos_hint={'center_x': 0.5, 'center_y': 0.5},
-        #                     size_hint=(0.9, 0.6)
-                            
-        #                 )
-        # for i in range(20):
-
-        #     # items = ThreeLineListItem(text=str(i) + ' item',
-        #     #                          secondary_text='This is ' + str(i) + 'th item',
-        #     #                          tertiary_text='hello')
-
-        #     icons = IconLeftWidget(icon="android")
-        #     items = OneLineIconListItem(text=str(i) + ' item')
-        #     items.add_widget(icons)
-        #     list_view.add_widget(items)
-
-        # scroll.add_widget(list_view)
-        # screen_info.add_widget(scroll)
-        
-        button_ok = Builder.load_string(helpers.button_ok)
-        button_ok.bind(on_press=Info.handle_ok) 
-        screen_info.add_widget(button_ok)
-        button_cancel = Builder.load_string(helpers.button_cancel)
-        button_cancel.bind(on_press=Info.handle_ok_cancel) 
-        screen_info.add_widget(button_cancel)
-
-
-        #
-        # Dock screen
-        #
-        screen_dock = Screen()
-        screen_dock.name = "Dock"
-        toolbar_demo = Builder.load_string(helpers.toolbar_demo)
-        screen_dock.add_widget(toolbar_demo)
-
-        receive_input = Builder.load_string(helpers.receive_input)
-        screen_dock.add_widget(receive_input)
-        dock_input = Builder.load_string(helpers.dock_input)
-        screen_dock.add_widget(dock_input)
-        
-        button_ok = Builder.load_string(helpers.button_ok)
-        button_ok.bind(on_press=Dock.handle_ok) 
-        screen_dock.add_widget(button_ok)
-        button_cancel = Builder.load_string(helpers.button_cancel)
-        button_cancel.bind(on_press=Dock.handle_ok_cancel) 
-        screen_dock.add_widget(button_cancel)
-        
-        #
-        # info articleList
-        #
-        screen_article_list = Screen()
-        screen_article_list.name = "Articlelist"
-        toolbar_demo = Builder.load_string(helpers.toolbar_demo)
-        screen_article_list.add_widget(toolbar_demo)
-
-        db_article = MDDataTable(pos_hint={'center_x': 0.5, 'center_y': 0.5},
-                                 size_hint=(0.9, 0.6),
-                                 check=False,
-                                 rows_num=10,
-                                 column_data=[
-                                     ("Article", dp(80)),
-                                     ("Desc", dp(40))
-                                 ],
-                                 row_data=[
-                                     ("Burger", "300"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200"),
-                                     ("Oats", "200")
-
-                                 ]
-                                 )
-        db_article.bind(on_row_press=Articlelist.on_row_press)
-        db_article.bind(on_check_press=Articlelist.on_check_press)
-        screen_article_list.add_widget(db_article)
-
-        button_ok = Builder.load_string(helpers.button_ok)
-        button_ok.bind(on_press=Articlelist.handle_ok) 
-        screen_article_list.add_widget(button_ok)
-        button_cancel = Builder.load_string(helpers.button_cancel)
-        button_cancel.bind(on_press=Articlelist.handle_ok_cancel) 
-        screen_article_list.add_widget(button_cancel)
-
-        #
-        # input article
-        #
-        screen_article = Screen()
-        screen_article.name = "Article"
-        toolbar_demo = Builder.load_string(helpers.toolbar_demo)
-        toolbar_demo.title = 'Article receipt'
-        screen_article.add_widget(toolbar_demo)
-
-        article_input = Builder.load_string(helpers.article_input)
-        screen_article.add_widget(article_input)
-
-        button_ok = Builder.load_string(helpers.button_ok)
-        button_ok.bind(on_press=Article.handle_ok) 
-        screen_article.add_widget(button_ok)
-        button_cancel = Builder.load_string(helpers.button_cancel)
-        button_cancel.bind(on_press=Article.handle_ok_cancel) 
-        screen_article.add_widget(button_cancel)
-
-
-        #
-        # Screen manager
-        #
-        global sm  
-        sm = Builder.load_string(helpers.windows)
-        
-        sm.add_widget(screen_login)
-        sm.add_widget(screen_info)
-        sm.add_widget(screen_article_list)
-        sm.add_widget(screen_article)
-        sm.add_widget(screen_dock)
-        sm.current = "Login"
-        return sm
-    
-DemoApp().run()
+MainApp().run()
