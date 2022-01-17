@@ -19,6 +19,8 @@ class MainApp(MDApp):
     dialog = None
     dropdown = None
 
+    def print_ids(self, ii):
+        print(ii)
     def popup1(self):
         popup.open()
 

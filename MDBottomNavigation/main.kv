@@ -103,3 +103,10 @@ Screen:
             MDBottomNavigationItem:
                 text: "Scr8"
                 name: "Scr8"
+                BoxLayout:
+                    orientation: 'vertical'
+                    Button:
+                        text: 'OK'
+                        size_hint: ( 0.35 , 0.10)
+                        pos_hint: {"center_x": .5, "center_y": .3}
+                        on_release: app.print_ids(root.ids)
