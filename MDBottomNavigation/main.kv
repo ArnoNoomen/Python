@@ -19,16 +19,16 @@ Screen:
             right_action_items: [["dots-vertical", lambda the_button: app.dropdown().open(the_button)]]
         MDBottomNavigation:
             MDBottomNavigationItem:
-                text: "screen1"
-                name: "screen1"
+                text: "Scr1"
+                name: "Scr1"
                 icon: "minus"
                 BoxLayout:
                     Button:
                     Button:
                     Button:
             MDBottomNavigationItem:
-                text: "screen2"
-                name: "screen2"
+                text: "Scr2"
+                name: "Scr2"
                 icon: "plus"
                 BoxLayout:
                     orientation: 'vertical'
@@ -36,8 +36,8 @@ Screen:
                     Button:
                     Button:
             MDBottomNavigationItem:
-                text: "screen3"
-                name: "screen3"
+                text: "Scr3"
+                name: "Scr3"
                 icon: "music"
                 MDTextField:
                     id: numeric
@@ -53,8 +53,8 @@ Screen:
                     size_hint: ( 0.35 , 0.10)
                     pos_hint: {"center_x": .5, "center_y": .3}
             MDBottomNavigationItem:
-                text: "screen4"
-                name: "screen4"
+                text: "Scr4"
+                name: "Scr4"
                 BoxLayout:
                     MDLabel:
                         text: 'menu'
@@ -69,8 +69,8 @@ Screen:
                         pos_hint: {'center_x':0.5,'center_y':0.5 }
                         on_press: app.close()
             MDBottomNavigationItem:
-                text: "screen5"
-                name: "screen5"
+                text: "Scr5"
+                name: "Scr5"
                 BoxLayout:
                     MDTextField:
                         hint_text: "Enter username"
@@ -82,8 +82,8 @@ Screen:
                         size_hint_x:None
                         width:300
             MDBottomNavigationItem:
-                text: "screen6"
-                name: "screen6"
+                text: "Scr6"
+                name: "Scr6"
                 BoxLayout:
                     ScrollView:
                         GridLayout:
@@ -92,11 +92,14 @@ Screen:
                             size_hint_y: None
                             height: self.minimum_height
             MDBottomNavigationItem:
-                text: "screen7"
-                name: "screen7"
+                text: "Scr7"
+                name: "Scr7"
                 BoxLayout:
                     orientation: 'vertical'
                     MDFlatButton:
                         text: "ALERT DIALOG"
                         pos_hint: {'center_x': .5, 'center_y': .5}
                         on_release: app.show_alert_dialog()
+            MDBottomNavigationItem:
+                text: "Scr8"
+                name: "Scr8"
