@@ -35,6 +35,7 @@ Screen:
                     orientation: 'vertical'
                     width: 200
                     size_hint_x: None
+                    Widget:
                     MDTextField:
                         id: username
                         text: ""
@@ -43,7 +44,7 @@ Screen:
                         size_hint_y: None
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
-                        focus: True                        
+                        focus: True
                     MDTextField:
                         id: password
                         hint_text: 'pw'
@@ -59,15 +60,21 @@ Screen:
                         size_hint_y: None
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
-                        on_text: app.check_text(field4.text), app.check_text1(field4.text), print('a')  
+                        on_text: app.check_text(field4.text), app.check_text1(field4.text), print('a')
+                    Button:
+                        text: 'OK'
+                        size_hint_x: None
+                        size_hint_y: None
+                        pos_hint:{"center_x":2,"y":2}
+                        height: 30
                     MDFlatButton:
                         text: "ALERT DIALOG"
                         size_hint_x: None
                         size_hint_y: None
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
-                        on_release: app.show_alert_dialog() 
-                    Widget: 
+                        on_release: app.show_alert_dialog()
+                    Widget:
             MDBottomNavigationItem:
                 text: "Scr4"
                 name: "Scr4"
