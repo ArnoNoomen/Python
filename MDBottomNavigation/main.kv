@@ -74,6 +74,21 @@ Screen:
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
                         on_release: app.show_alert_dialog()
+                    MDLabel:
+                        id: label2
+                        text: 'menu'
+                        halign: 'center'
+                        size_hint_x: None
+                        size_hint_y: None
+                        pos_hint:{"center_x":2,"y":2}
+                        height: 30
+                    MDRectangleFlatButton:
+                        text: 'Oke'
+                        size_hint_x: None
+                        size_hint_y: None
+                        pos_hint:{"center_x":2,"y":2}
+                        height: 30
+                        on_press: app.popup1()
                     Widget:
             MDBottomNavigationItem:
                 text: "Scr4"

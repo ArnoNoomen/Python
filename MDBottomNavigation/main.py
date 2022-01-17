@@ -55,6 +55,7 @@ class MainApp(MDApp):
 
     def popup1(self):
         popup.open()
+        self.root.ids.label2.text = "jajaja"
 
     def show_alert_dialog(self):
         if not self.dialog:
