@@ -19,11 +19,11 @@
         id: special_label
 
 <MDTextFieldPersian@MDTextField>:
-    multiline: 0
-    size_hint: 1,1
-    font_size: 20
-    padding_y: [15,0] # can be changed
-    padding_x: [self.size[0]-self._get_text_width(max(self._lines, key=len), self.tab_width, self._label_cached)-10,8]
+    #multiline: 0
+    #size_hint: 1,1
+    #font_size: 20
+    #padding_y: [15,0] # can be changed
+    #padding_x: [self.size[0]-self._get_text_width(max(self._lines, key=len), self.tab_width, self._label_cached)-10,8]
 
 Screen:
     id: screen
@@ -39,38 +39,31 @@ Screen:
                 name: "Scr3"
                 icon: "music"
                 BoxLayout:
-                    orientation: 'vertical'
-                    #padding: "10dp"
-                    #height: "40dp"
-                    #size_hint_y: None
+                #FloatLayout:
+                    MDTextField:
+                        id: username
+                        text: ""
+                        hint_text: 'ID'
+                        pos_hint:{"center_x":0.5,"y":0.3}
+                        size_hint_x: 0.35
+                        focus: True
+                    MDTextField:
+                        id: password
+                        hint_text: 'PW'
+                        pos_hint:{"center_x":0.5,"y":0.2}
+                        size_hint_x: 0.35
+                        password: True
                     MDTextFieldPersian:
                         id: text_field_error
-                        focus: True
                         required: True
                         max_text_length: 5
-                        #mode: "rectangle"
-                        #hint_text: "Alleen numbers toestaan"
-                        #helper_text: "There will always be a mistake"
-                        #helper_text_mode: "on_error"
-                        #pos_hint: {"center_y": .5}
                         hint_text:"Enter Name"
-                        pos_hint:{'center_x':.5,'center_y':.2}
-                        size_hint:1,None
-                        height:"50dp"
+                        pos_hint:{"center_x":0.5,"y":0.3}
+                        size_hint_x: 0.35
                     MDTextField:
-                        id: text_field_error
-                        focus: True
-                        required: True
-                        max_text_length: 5
-                        #mode: "rectangle"
-                        #hint_text: "Alleen numbers toestaan"
-                        #helper_text: "There will always be a mistake"
-                        #helper_text_mode: "on_error"
-                        #pos_hint: {"center_y": .5}
-                        hint_text:"Enter Name"
-                        pos_hint:{'center_x':.5,'center_y':.2}
-                        size_hint:1,None
-                        height:"50dp"
+                        hint_text: 'text invoeren'
+                        pos_hint:{"center_x":-0.5,"y":0.2}
+                        size_hint_x: 0.35
                     #MDTextField:
                     #    id: numeric
                     #    input_filter: int                       
