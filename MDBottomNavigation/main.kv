@@ -120,7 +120,11 @@ Screen:
                                 # special_gridlayout.ids.special_label.text = my_textinput.text
                                 # app.print_ids(root.ids)
                                 print(my_textinput.text)
-                                print(special_gridlayout.ids.special_label.text)
+                                print(mdlabel.text)
                                 app.set_text(my_textinput.text)
-                        SpecialGridLayout:
-                            id: special_gridlayout
+                        MDLabel:
+                            id: mdlabel
+                            text: "Hello world"
+                            halign: "center"
+                            theme_text_color: "Error"
+                            font_style: "Subtitle2"

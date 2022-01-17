@@ -24,8 +24,8 @@ class MainApp(MDApp):
 
     def set_text(self, text):
         print(text)
-        self.root.ids.special_gridlayout.ids.special_label.text = text
-        print(self.root.ids.special_gridlayout.ids.special_label.text)
+        self.root.ids.mdlabel.text = text
+        print(self.root.ids.mdlabel.text)
 
     def popup1(self):
         popup.open()
