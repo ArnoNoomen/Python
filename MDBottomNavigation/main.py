@@ -33,7 +33,7 @@ class MDTextFieldPersian(MDTextField):
 class MainApp(MDApp):
     dialog = None
     dropdown = None
-    MDFlatButton.on_press()
+    MDFlatButton
 
     def check_text(self, text):
         print(text)
@@ -67,7 +67,6 @@ class MainApp(MDApp):
                         text="CANCEL",
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
-                        on_press="aa"
                     ),
                     MDFlatButton(
                         text="DISCARD",
