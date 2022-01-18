@@ -33,6 +33,7 @@ class MDTextFieldPersian(MDTextField):
 class MainApp(MDApp):
     dialog = None
     dropdown = None
+    MDFlatButton.on_press()
 
     def check_text(self, text):
         print(text)
@@ -60,12 +61,13 @@ class MainApp(MDApp):
     def show_alert_dialog(self):
         if not self.dialog:
             self.dialog = MDDialog(
-                text="Discard draft?",
+                text=str(self.root.size),
                 buttons=[
                     MDFlatButton(
                         text="CANCEL",
                         theme_text_color="Custom",
                         text_color=self.theme_cls.primary_color,
+                        on_press="aa"
                     ),
                     MDFlatButton(
                         text="DISCARD",
@@ -74,7 +76,9 @@ class MainApp(MDApp):
                     ),
                 ],
             )
+        print(self.dialog)
         self.dialog.open()
+        
 
     def on_start(self):
         self.dropdown = MDDropdownMenu(width_mult=4)
