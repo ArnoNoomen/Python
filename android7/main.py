@@ -28,6 +28,7 @@ class MenuScreen(Screen):
     print('MenuScreen')
     pass
 
+
 class ProfileScreen(Screen):
     print('ProfileScreen')
     pass
