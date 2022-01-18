@@ -18,6 +18,7 @@ popup = Popup(title='Test popup',
     size_hint=(None, None), size=(400, 400)
 )
 
+
 class MDTextFieldPersian(MDTextField):
     max_chars = NumericProperty(5)  # maximum character allowed
     str = StringProperty()
