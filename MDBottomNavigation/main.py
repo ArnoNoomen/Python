@@ -33,7 +33,6 @@ class MDTextFieldPersian(MDTextField):
 class MainApp(MDApp):
     dialog = None
     dropdown = None
-    MDFlatButton
 
     def check_text(self, text):
         print(text)

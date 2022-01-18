@@ -32,6 +32,7 @@ Screen:
                 name: "Scr3"
                 icon: "music"
                 BoxLayout:
+                    id: 'arno11'
                     orientation: 'vertical'
                     width: 200
                     size_hint_x: None
@@ -68,11 +69,14 @@ Screen:
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
                     MDFlatButton:
+                        id: kobus12
                         text: "ALERT DIALOG"
                         size_hint_x: None
                         size_hint_y: None
                         pos_hint:{"center_x":2,"y":2}
                         height: 30
+                        #    on_press: print('a')
+                        #    on_release: print('a2')
                         on_release: app.show_alert_dialog()
                     MDLabel:
                         id: label2
