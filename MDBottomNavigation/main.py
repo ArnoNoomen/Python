@@ -75,6 +75,7 @@ class MainApp(MDApp):
                 ],
             )
         print(self.dialog)
+
         self.dialog.open()
         
 
