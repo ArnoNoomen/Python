@@ -8,6 +8,7 @@ git push
 
 git add .  # voeg toe voor remote
 git commit -m "omschrijving" 
+git commit -a -m omschrijving
 git push
 
 * download
