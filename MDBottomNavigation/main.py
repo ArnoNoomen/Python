@@ -45,12 +45,6 @@ class MainApp(MDApp):
         print(obj.parent)
         print(obj.parent.parent)
 
-<<<<<<< HEAD
-        # hallo
-=======
-        # hallojaja
->>>>>>> b02e6716c16847eaf32ea0abcd685b06d58f66a3
-
     def check_text(self, text):
         print(text)
 
