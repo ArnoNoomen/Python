@@ -2,7 +2,6 @@ from calendar import Calendar
 from logging import root
 import os
 import re
-#from tkinter import Widget
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton
@@ -18,7 +17,6 @@ from kivy.properties import StringProperty, NumericProperty, \
     BooleanProperty, AliasProperty, OptionProperty, \
     ListProperty, ObjectProperty, VariableListProperty, ColorProperty
 from kivy.metrics import dp
-from kivy.clock import Clock
 
 # OpenCart Api
 # https://www.letscms.com/documents/api/opencart-rest-api.html
@@ -34,7 +32,6 @@ from kivy.clock import Clock
 # https://www.youtube.com/watch?v=sa4AVMjjzNo ( keyboard )
 Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
 Window.softinput_mode = 'below_target'
-Window.size = (400, 600)
 
 KV = """
 #:import Clock kivy.clock.Clock
