@@ -41,6 +41,7 @@ class MainApp(MDApp):
     def close_dialog(self, obj):
         print(self)
         print(obj)
+        print(self.root.ids)
         print(obj.parent)
         print(obj.parent.parent)
 
