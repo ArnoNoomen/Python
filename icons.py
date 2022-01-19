@@ -6,7 +6,7 @@ from kivymd.icon_definitions import md_icons
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineIconListItem
 
-
+{ mane: arno }
 Builder.load_string(
     '''
 #:import images_path kivymd.images_path
