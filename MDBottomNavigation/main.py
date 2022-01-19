@@ -45,7 +45,7 @@ class MainApp(MDApp):
         print(obj.parent)
         print(obj.parent.parent)
 
-# jaajaa
+        # hallo
 
     def check_text(self, text):
         print(text)
