@@ -4,20 +4,20 @@ import os
 import re
 from tkinter import Widget
 from kivymd.app import MDApp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivymd.uix.list import OneLineListItem, TwoLineListItem, IconLeftWidget, MDList, ImageLeftWidget, OneLineAvatarIconListItem
+from kivymd.uix.datatables import MDDataTable
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivymd.uix.card import MDCard
+from kivymd.uix.list import OneLineListItem, TwoLineListItem, IconLeftWidget, MDList, ImageLeftWidget, OneLineAvatarIconListItem
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty, NumericProperty, \
     BooleanProperty, AliasProperty, OptionProperty, \
     ListProperty, ObjectProperty, VariableListProperty, ColorProperty
-from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
 from kivy.clock import Clock
 
 # OpenCart Api
@@ -97,7 +97,7 @@ Screen:
                         Button:
                             text: 'OK'
                             size_hint_y: 1
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "leeg"), .3)
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -267,32 +267,32 @@ Screen:
 
                     Widget:
                     # paul
-                    ScrollView:
-                        size_hint: None, None
-                        size: "350dp", "400dp"
-                        # pos_hint: {"center_x": .5, "center_y": 1.2}
-                        MDList:
-                            id: list
-                            TwoLineAvatarListItem:
-                                text: "Sony laptop"
-                                secondary_text: "Model x68 "
-                                ImageLeftWidget:
-                                    source: "sony.jpg"
-                            TwoLineAvatarListItem:
-                                text: "Iphone 6"
-                                secondary_text: "Model 6-I5"
-                                ImageLeftWidget:
-                                    source: "iPhone.jpg"
-                            TwoLineAvatarListItem:
-                                text: "Palm"
-                                secondary_text: "Model Palm philips"
-                                ImageLeftWidget:
-                                    source: "palm.jpg"
-                            TwoLineAvatarListItem:
-                                text: "MacBookAir"
-                                secondary_text: "MacBookAir model 3"
-                                ImageLeftWidget:
-                                    source: "MacBookAir.jpg"
+                    # ScrollView:
+                    #     size_hint: None, None
+                    #     size: "350dp", "400dp"
+                    #     # pos_hint: {"center_x": .5, "center_y": 1.2}
+                    #     MDList:
+                    #         id: list
+                    #         TwoLineAvatarListItem:
+                    #             text: "Sony laptop"
+                    #             secondary_text: "Model x68 "
+                    #             ImageLeftWidget:
+                    #                 # source: "sony.jpg"
+                    #         TwoLineAvatarListItem:
+                    #             text: "Iphone 6"
+                    #             secondary_text: "Model 6-I5"
+                    #             ImageLeftWidget:
+                    #                 source: "iPhone.jpg"
+                    #         TwoLineAvatarListItem:
+                    #             text: "Palm"
+                    #             secondary_text: "Model Palm philips"
+                    #             ImageLeftWidget:
+                    #                 source: "palm.jpg"
+                    #         TwoLineAvatarListItem:
+                    #             text: "MacBookAir"
+                    #             secondary_text: "MacBookAir model 3"
+                    #             ImageLeftWidget:
+                    #                 source: "MacBookAir.jpg"
 
 
                     BoxLayout:
@@ -322,7 +322,7 @@ Screen:
                 Image:
                     id: avatar
                     size_hint: (.5,.5)
-                    source: "bol.png"
+                    # source: "bol.png"
                 MDLabel:
                     text: "Mobile App"
                     font_style: "Subtitle1"
@@ -446,7 +446,7 @@ class Screen_article(Screen):
 
 # class nodig voor hamburgermenu
 class MDlist(MDList):
-    def __init__(self, **kwargs):
+  def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 # class test(MDList):
