@@ -97,7 +97,7 @@ Screen:
                         Button:
                             text: 'OK'
                             size_hint_y: 1
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "leeg"), .3)             
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)             
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
