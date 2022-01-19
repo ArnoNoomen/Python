@@ -9,6 +9,7 @@ from kivymd.uix.button import MDFlatButton
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.textfield import MDTextField
 
+
 class MyContent(BoxLayout):
     pass
 
@@ -31,19 +32,22 @@ class MDTextFieldPersian(MDTextField):
 
 class MainApp(MDApp):
     dialog = None
-    dropdown = None
+    dropdown = None    
 
     def show_data(self): 
         oke_button = MDFlatButton(text='Oke', on_release=self.close_dialog)
-        self.dialog = MDDialog(title='MDDialog', text='Helloworld', size_hint=(0.7, 1), buttons=[oke_button])
-        self.dialog.open()
+        global arno
+        arno = MDDialog(title='MDDialog', text='Helloworld', size_hint=(0.7, 1), buttons=[oke_button])
+        arno.open()
 
-    def close_dialog(self, obj):
-        print(self)
-        print(obj)
-        print(self.root.ids)
-        print(obj.parent)
-        print(obj.parent.parent)
+    def close_dialog(*args):
+         arno.dismiss()
+ #       print(args[1].parent)
+ #       print(args[1].parent.parent)
+ #       print(args[1].parent.parent.parent)
+ #       print(args[1].parent.parent.parent.parent)
+ #       args[1].parent.parent.parent.parent.dismiss()
+ #       #self.dialog.dismiss()
 
     def check_text(self, text):
         print(text)
