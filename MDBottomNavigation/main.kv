@@ -118,6 +118,18 @@ Screen:
                             size_hint_y: None
                             height: self.minimum_height
             MDBottomNavigationItem:
+                text: "Scr7"
+                name: "Scr7"
+                BoxLayout:
+				    orientation: 'vertical'
+                    width: 200
+                    size_hint_x: None
+                    Widget:
+				    MDFlatButton:
+					    text: 'OK'
+                        on_release:
+                            app.show_data()
+            MDBottomNavigationItem:
                 text: "Scr8"
                 name: "Scr8"
                 BoxLayout:

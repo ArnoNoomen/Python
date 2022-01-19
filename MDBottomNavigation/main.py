@@ -33,6 +33,17 @@ class MainApp(MDApp):
     dialog = None
     dropdown = None
 
+    def show_data(self): 
+        oke_button = MDFlatButton(text='Oke', on_release=self.close_dialog)
+        self.dialog = MDDialog(title='MDDialog', text='Helloworld', size_hint=(0.7, 1), buttons=[oke_button])
+        self.dialog.open()
+
+    def close_dialog(self, obj):
+        print(self)
+        print(obj)
+        print(obj.parent)
+        print(obj.parent.parent)
+
     def check_text(self, text):
         print(text)
 
