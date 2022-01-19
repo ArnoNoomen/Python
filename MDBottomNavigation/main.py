@@ -32,8 +32,9 @@ class MDTextFieldPersian(MDTextField):
 
 class MainApp(MDApp):
     dialog = None
-    dropdown = None  
-      
+    dropdown = None 
+     
+
 
     def show_data(self): 
         oke_button = MDFlatButton(text='Oke', on_release=self.close_dialog)
