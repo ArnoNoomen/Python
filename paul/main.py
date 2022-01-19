@@ -392,8 +392,8 @@ class Screen_inlog(Screen):
 
 
 class Screen_articlelist(Screen):
-   mylist = ObjectProperty()
-   def __init__(self, **kwargs):
+    mylist = ObjectProperty()
+    def __init__(self, **kwargs):
         super(Screen_articlelist,self).__init__(**kwargs)
 
 class Screen_leeg(Screen):
