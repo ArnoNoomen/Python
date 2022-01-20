@@ -9,7 +9,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
 
 def main():
 
@@ -38,14 +37,8 @@ def main():
     msg['To'] = args.to
     #body = "Salut!"
     #msg.attach(MIMEText(body, 'plain'))
-    msgText = MIMEText('<img src="cid:image1">', 'html')
-    msg.attach(msgText)
-
-    part = MIMEBase('application', 'octet-stream')
-    part.set_payload(open('easyretail.jpg', "rb").read())
-    encoders.encode_base64(part)
-    part.add_header('Content-ID', 'image1')
-    msg.attach(part)
+    msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
+    msg.attach(msgtext)
 
     for rij in attach_dict:
         if rij['toevoegen'].upper() == 'N':
@@ -53,7 +46,10 @@ def main():
         part = MIMEBase('application', rij['application'])
         part.set_payload(open(rij['filename'], "rb").read())
         encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment', filename=rij['attachname'])
+        if rij['embedded'].upper() == 'J':
+            part.add_header('Content-ID', f"{rij['attachname']}")
+        else:
+            part.add_header('Content-Disposition', 'attachment', filename=rij['attachname'])
         msg.attach(part)
 
     try:
