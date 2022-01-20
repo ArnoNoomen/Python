@@ -54,7 +54,7 @@ def main():
         server.quit()
     except:
         print('fout met verzenden')
-        sys.exit(1)        
-    
+        sys.exit(1)
+
 if __name__ == '__main__':
     main()
