@@ -40,7 +40,7 @@ def main():
     for rij in attach_dict:
         if rij['toevoegen'].upper() == 'N':
             continue
-        part = MIMEBase('application', "octet-stream")
+        part = MIMEBase('application', rij['application'])
         part.set_payload(open(rij['filename'], "rb").read())
         encoders.encode_base64(part)
         part.add_header('Content-Disposition', 'attachment', filename=rij['attachname'])
