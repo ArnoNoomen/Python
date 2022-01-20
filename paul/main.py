@@ -4,7 +4,8 @@ import os
 import re
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
+from kivymd.uix.button import MDFlatButton, MDRectangleFlatIconButton, MDFillRoundFlatIconButton
+from kivymd.uix.textfield import MDTextField, MDTextFieldRound, MDTextFieldRect
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivymd.uix.datatables import MDDataTable
@@ -18,6 +19,7 @@ from kivy.properties import StringProperty, NumericProperty, \
     ListProperty, ObjectProperty, VariableListProperty, ColorProperty
 from kivy.metrics import dp
 
+
 # OpenCart Api
 # https://www.letscms.com/documents/api/opencart-rest-api.html
 
@@ -30,8 +32,8 @@ from kivy.metrics import dp
 
 
 # https://www.youtube.com/watch?v=sa4AVMjjzNo ( keyboard )
-Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
-Window.softinput_mode = 'below_target'
+# Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
+# Window.softinput_mode = 'below_target'
 
 KV = """
 #:import Clock kivy.clock.Clock
@@ -66,7 +68,6 @@ Screen:
                     MDIcon:
                         icon: 'account'
                         icon_color: 1, 0, 1, 1
-                        font_size: 180
                         markup: True
                         halign: 'center'
                     # MDTextFieldRound:
@@ -77,7 +78,6 @@ Screen:
                         helper_text: "Username"
                         helper_text_mode: "on_focus" # persitent verdwijnt text bij input
                         width: 20
-                        font_size: 48
                         # on_text_validate: screen_inlog.on_enter_user
 
                     MDTextField:
@@ -85,7 +85,6 @@ Screen:
                         hint_text: "Password"
                         pos_hint: {"center_x": .5 }
                         width: 20
-                        font_size: 48
                         password: True
 
                     BoxLayout:
@@ -94,7 +93,7 @@ Screen:
                         Button:
                             text: 'OK'
                             size_hint_y: 1
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "leeg"), .3)
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -110,7 +109,6 @@ Screen:
                         icon_right: "text-search"
                         hint_text: "Search menu"
                         width: 20
-                        font_size: 48
 
                     ScrollView:
                         size_hint: None, None
@@ -170,7 +168,6 @@ Screen:
                         hint_text: "Receive number"
                         # pos_hint: {"center_x": .5 }
                         width: 20
-                        font_size: 48
                         on_text_validate: screen_receiving.on_enter_receiveId
                     MDLabel:
                         text: "Receipts 0"
@@ -185,20 +182,7 @@ Screen:
                         background_color: 0,255,255,255
                         color: 0,0,0,1
                         values: [ "DOCK 130", "DOCK131","DOCK 132", "DOCK133","DOCK 134", "DOCK135","DOCK 136", "DOCK137", "DOCK138" ]
-                    # ScrollView:
-                    #     # size_hint: None, None
-                    #     size: "350dp", "200dp"
-                    #     # pos_hint: {"center_x": .5, "center_y": 1.2}
-                    #     MDList:
-                    #         OneLineListItem:
-                    #             text: "DOCK 123"
-                    #         OneLineListItem:
-                    #             text: "DOCK 124"
-                    #         OneLineListItem:
-                    #             text: "DOCK 125"
-                    #         OneLineListItem:
-                    #             text: "DOCK 126"
-
+                  
                     BoxLayout:
                         orientation: 'horizontal'
                         padding: 20
@@ -228,14 +212,12 @@ Screen:
                         hint_text: "Article"
                         pos_hint: {"center_x": .5 }
                         width: 50
-                        font_size: 48
                         on_text: screen_article.num( self )
                     MDLabel:
                         text: "Selected:"
                         font_style: "H4"
                         size_hint_y: None
                         height: '260dp'
-
 
                     BoxLayout:
                         orientation: 'horizontal'
@@ -264,33 +246,32 @@ Screen:
 
                     Widget:
                     # paul
-                    # ScrollView:
-                    #     size_hint: None, None
-                    #     size: "350dp", "400dp"
-                    #     # pos_hint: {"center_x": .5, "center_y": 1.2}
-                    #     MDList:
-                    #         id: list
-                    #         TwoLineAvatarListItem:
-                    #             text: "Sony laptop"
-                    #             secondary_text: "Model x68 "
-                    #             ImageLeftWidget:
-                    #                 # source: "sony.jpg"
-                    #         TwoLineAvatarListItem:
-                    #             text: "Iphone 6"
-                    #             secondary_text: "Model 6-I5"
-                    #             ImageLeftWidget:
-                    #                 source: "iPhone.jpg"
-                    #         TwoLineAvatarListItem:
-                    #             text: "Palm"
-                    #             secondary_text: "Model Palm philips"
-                    #             ImageLeftWidget:
-                    #                 source: "palm.jpg"
-                    #         TwoLineAvatarListItem:
-                    #             text: "MacBookAir"
-                    #             secondary_text: "MacBookAir model 3"
-                    #             ImageLeftWidget:
-                    #                 source: "MacBookAir.jpg"
-
+                    ScrollView:
+                        size_hint: None, None
+                        size: "350dp", "400dp"
+                        # pos_hint: {"center_x": .5, "center_y": 1.2}
+                        MDList:
+                            id: list
+                            TwoLineAvatarListItem:
+                                text: "Sony laptop"
+                                secondary_text: "Model x68 "
+                                ImageLeftWidget:
+                                    source: "sony.jpg"
+                            TwoLineAvatarListItem:
+                                text: "Iphone 6"
+                                secondary_text: "Model 6-I5"
+                                ImageLeftWidget:
+                                    source: "iPhone.jpg"
+                            TwoLineAvatarListItem:
+                                text: "Palm"
+                                secondary_text: "Model Palm philips"
+                                ImageLeftWidget:
+                                    source: "palm.jpg"
+                            TwoLineAvatarListItem:
+                                text: "MacBookAir"
+                                secondary_text: "MacBookAir model 3"
+                                ImageLeftWidget:
+                                    source: "MacBookAir.jpg"
 
                     BoxLayout:
                         orientation: 'horizontal'
@@ -305,6 +286,9 @@ Screen:
             Screen_leeg: # dynamic screen
                 name:  'leeg'
                 id: screen_leeg
+            Screen_leeg2: # dynamic screen
+                name:  'leeg2'
+                id: screen_leeg2    
 
 
         MDNavigationDrawer:
@@ -319,7 +303,7 @@ Screen:
                 Image:
                     id: avatar
                     size_hint: (.5,.5)
-                    # source: "bol.png"
+                    source: "easyretail.jpg"
                 MDLabel:
                     text: "Mobile App"
                     font_style: "Subtitle1"
@@ -358,11 +342,6 @@ class Screen_inlog(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        card = MDCard(orientation='vertical', pos_hint={
-                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .6))
-
-        # self.add_widget(card)
-
     def handle_ok(self, screenLogin , manager, name_screen):
 
         manager.current = name_screen
@@ -397,25 +376,68 @@ class Screen_leeg(Screen):
     def __init__(self, **kwargs):
         super(Screen_leeg,self).__init__(**kwargs)
 
-        button = MDFlatButton( text='jaja',
+        button = MDFlatButton( text='screen3',
                                on_press=self.doeiets
         )
+      
+        box = BoxLayout( orientation='vertical', padding=20)
 
-        card = MDCard(orientation='vertical', pos_hint={
-                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .75))
-        box = BoxLayout( orientation='horizontal', padding=20)
-        self.add_widget(card)
+        text1 = MDTextField ( hint_text="", font_size="36sp", max_text_length="5" )
+        text2 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="36sp" )
+        text3 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="36sp" )
+      
+        text4 = MDTextField ( hint_text="", font_size="48sp", max_text_length="5" )
+        text5 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="48sp" )
+        text6 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="48sp" )
+      
+        text7 = MDTextField ( hint_text="", font_size="96sp", max_text_length="5" )
+        text8 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="96sp" )
+        text9 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="96sp" )
+      
+        button2 = MDFlatButton( text='zet font',
+                               on_press=self.zetfont
+        )
+        
         self.add_widget(box)
-        card.add_widget(button)
-
+        box.add_widget(text3)
+        box.add_widget(text6)
+        box.add_widget(text9)
+        box.add_widget(button)
+        box.add_widget(button2)
 
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
+        sm.current = 'leeg2'
 
-        print ( args[1].parent )
-        button = MDFlatButton( text='Paulus')
-        obj = args[1].parent
-        obj.add_widget(button)
+    
+    def zetfont( *args, **kwargs ):
+        pass
+
+class Screen_leeg2(Screen):
+    pass
+    def __init__(self, **kwargs):
+        super(Screen_leeg2,self).__init__(**kwargs)
+
+        button1 = MDFlatButton ( text='screen3',font_size="36sp" )
+        button2 = MDFlatButton ( text='screen3',font_size="48sp" )
+        button3 = MDFlatButton ( text='screen3',font_size="96sp" )
+
+        button4 = MDRectangleFlatIconButton( icon="android" ,text='screen3',font_size="24sp" )
+        button5 = MDFillRoundFlatIconButton( text='screen3',font_size="35sp",icon='android' )
+
+        box = BoxLayout( orientation='vertical', padding=20)
+        self.add_widget(box)
+        box.add_widget(button1)
+        box.add_widget(button2)
+        box.add_widget(button3)
+        box.add_widget(button4)
+        box.add_widget(button5)
+
+    def doeiets( *args, **kwargs ):
+        sm = args[1].parent.parent.parent
+        sm.current = 'leeg2'    
+
+
 
 
 
@@ -445,11 +467,6 @@ class Screen_article(Screen):
 class MDlist(MDList):
   def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-# class test(MDList):
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         self.add_widget(TwoLineListItem( text= 'dynamic'))
 
 class MainApp(MDApp):
     userId = ObjectProperty()
