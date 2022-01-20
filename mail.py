@@ -7,7 +7,9 @@ import json
 from email import encoders
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
 
 def main():
 
@@ -30,12 +32,20 @@ def main():
     except FileNotFoundError:
         pass
 
-    msg = MIMEMultipart()
+    msg = MIMEMultipart('related')
     msg['Subject'] = args.subject
     msg['From'] = smtp_dict['from']
     msg['To'] = args.to
     #body = "Salut!"
     #msg.attach(MIMEText(body, 'plain'))
+    msgText = MIMEText('<img src="cid:image1">', 'html')
+    msg.attach(msgText)
+
+    part = MIMEBase('application', 'octet-stream')
+    part.set_payload(open('testbestanden/046.JPG', "rb").read())
+    encoders.encode_base64(part)
+    part.add_header('Content-ID', 'image1')
+    msg.attach(part)
 
     for rij in attach_dict:
         if rij['toevoegen'].upper() == 'N':
