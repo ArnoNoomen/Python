@@ -15,6 +15,7 @@ def main():
     parser.add_argument('--from', dest='from1', action='store', required=True)
     parser.add_argument('--to', dest='to', action='store', required=True)
     parser.add_argument('--smtp', dest='smtp', action='store', required=True)
+    parser.add_argument('--port', dest='port', action='store', required=True)
     args = parser.parse_args()
     
     msg = MIMEMultipart()
@@ -25,23 +26,25 @@ def main():
     msg.attach(MIMEText(body, 'plain'))
 
     part = MIMEBase('application', "octet-stream")
-    part.set_payload(open("example.txt", "rb").read())
+    part.set_payload(open("testbestanden/example1.txt", "rb").read())
     encoders.encode_base64(part)
     part.add_header('Content-Disposition', 'attachment', filename='example1.txt')
     msg.attach(part)
 
     part = MIMEBase('application', "octet-stream")
-    part.set_payload(open("example2.txt", "rb").read())
+    part.set_payload(open("testbestanden/example2.txt", "rb").read())
     encoders.encode_base64(part)
     part.add_header('Content-Disposition', 'attachment', filename='example2.txt')
     msg.attach(part)
     
-    print(msg)
-    #server = smtplib.SMTP(args.smtp, 587)
-    #server.starttls()
-    #server.login(args.from1, args.pwd)
-    #server.send_message(msg)
-    #server.quit()
+    #print(msg)
+    f = open("testbestanden/pwd", "r")
+    pwd1 = f.read()
+    server = smtplib.SMTP(args.smtp, args.port)
+    server.starttls()
+    server.login(args.from1, pwd1)
+    server.send_message(msg)
+    server.quit()
 
 if __name__ == '__main__':
     main()
