@@ -42,7 +42,7 @@ def main():
     msg.attach(msgText)
 
     part = MIMEBase('application', 'octet-stream')
-    part.set_payload(open('testbestanden/046.JPG', "rb").read())
+    part.set_payload(open('easyretail.jpg', "rb").read())
     encoders.encode_base64(part)
     part.add_header('Content-ID', 'image1')
     msg.attach(part)
