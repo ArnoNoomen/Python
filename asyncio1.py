@@ -16,20 +16,20 @@ async def main():
     taks1 = asyncio.create_task(fetch_data(200))
     taks2 = asyncio.create_task(fetch_data(100))
     print('start task3')    
-    taks3 = asyncio.create_task(print_number(100000))
+    taks3 = asyncio.create_task(print_number(10))
     print('start task4')
-    taks4 = asyncio.create_task(print_number(200000))
+    taks4 = asyncio.create_task(print_number(20))
     print('Hallo')
     value1 = await(taks1)
     print(value1)
     value2 = await(taks2)
     print(value2)
 
-    # Schedule three calls *concurrently*:
+    #Schedule three calls *concurrently*:
     await asyncio.gather(
-        print_number(100000),
-        print_number(2000),
-        print_number(30000),
+        print_number(50),
+        print_number(60),
+        print_number(70),
     )
     
 if __name__ == '__main__':
