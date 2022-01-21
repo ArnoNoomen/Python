@@ -36,7 +36,7 @@ def main():
     except FileNotFoundError:
         print('testbestanden/webrequest.json is niet aanwezig')
         sys.exit(1)
-    
+
     if webrequest_dict["protocol"].upper() == 'HTTPS':
         conn = http.client.HTTPSConnection(webrequest_dict["site"])
     else:
@@ -45,7 +45,8 @@ def main():
     res = conn.getresponse()
     print(res.status, res.reason)
     data1 = res.read()
-    print(data1)
+    data2 = data1.decode("utf-8")
+    print(data2)
 
 if __name__ == '__main__':
     main()

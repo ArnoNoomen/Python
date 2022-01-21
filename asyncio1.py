@@ -1,28 +1,26 @@
 import asyncio
 
-async def fetch_data(max):
-    for i in range(max):
+async def fetch_data(maxa):
+    for _i in range(maxa):
         pass
-    #    print(f'fetchdata {i}')
-    return {'data': max}
+    return {'data': maxa}
 
-async def print_number(max):
-    for i in range(max):
-        pass
-        print(f'print_number {i} {max}')
-    #print(max)
+async def print_number(maxa):
+    for i in range(maxa):
+        print(f'print_number {i} {maxa}')
+    print(maxa)
 
 async def main():
-    taks1 = asyncio.create_task(fetch_data(200))
-    taks2 = asyncio.create_task(fetch_data(100))
-    print('start task3')    
-    taks3 = asyncio.create_task(print_number(10))
+    task1 = asyncio.create_task(fetch_data(200))
+    task2 = asyncio.create_task(fetch_data(100))
+    print('start task3')
+    task3 = asyncio.create_task(print_number(10))
     print('start task4')
-    taks4 = asyncio.create_task(print_number(20))
+    task4 = asyncio.create_task(print_number(20))
     print('Hallo')
-    value1 = await(taks1)
+    value1 = await(task1)
     print(value1)
-    value2 = await(taks2)
+    value2 = await(task2)
     print(value2)
 
     #Schedule three calls *concurrently*:
@@ -31,6 +29,6 @@ async def main():
         print_number(60),
         print_number(70),
     )
-    
+
 if __name__ == '__main__':
     asyncio.run(main())
