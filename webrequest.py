@@ -1,4 +1,6 @@
 import http.client
+import sys
+import json
 
 # https://docs.python.org/3/library/http.client.html#examples
 
@@ -27,7 +29,18 @@ import http.client
 #string output1 = sr.ReadToEnd();
 
 def main():
-    conn = http.client.HTTPConnection("ubuntu2104")
+    webrequest_dict = {}
+    try:
+        with open("testbestanden/webrequest.json", encoding='iso-8859-1') as fp1:
+            webrequest_dict = json.loads(fp1.read())
+    except FileNotFoundError:
+        print('testbestanden/webrequest.json is niet aanwezig')
+        sys.exit(1)
+    
+    if webrequest_dict["protocol"].upper() == 'HTTPS':
+        conn = http.client.HTTPSConnection(webrequest_dict["site"])
+    else:
+        conn = http.client.HTTPConnection(webrequest_dict["site"])
     conn.request("GET", "/")
     res = conn.getresponse()
     print(res.status, res.reason)
