@@ -1,4 +1,4 @@
-import http.client
+import http.client, urllib.parse
 import sys
 import json
 
@@ -37,11 +37,14 @@ def main():
         print('testbestanden/webrequest.json is niet aanwezig')
         sys.exit(1)
 
+    params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
+    headers = {"Content-type": "application/x-www-form-urlencoded","Accept": "text/plain"}
+
     if webrequest_dict["protocol"].upper() == 'HTTPS':
         conn = http.client.HTTPSConnection(webrequest_dict["site"])
     else:
         conn = http.client.HTTPConnection(webrequest_dict["site"])
-    conn.request("GET", "/")
+    conn.request("GET", "/", params, headers)
     res = conn.getresponse()
     print(res.status, res.reason)
     data1 = res.read()
