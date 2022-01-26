@@ -1,4 +1,5 @@
-import http.client, urllib.parse
+import http.client
+import urllib.parse
 import sys
 import json
 
