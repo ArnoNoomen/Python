@@ -1,45 +1,34 @@
 from calendar import Calendar
 from logging import root
-import os 
-import re
+import os
+from tkinter import Widget
 from kivymd.app import MDApp
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton, MDRectangleFlatIconButton, MDFillRoundFlatIconButton
-from kivymd.uix.textfield import MDTextField, MDTextFieldRound, MDTextFieldRect
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivymd.uix.datatables import MDDataTable
+from kivymd.uix.list import OneLineListItem, TwoLineListItem, IconLeftWidget, MDList, ImageLeftWidget, OneLineAvatarIconListItem
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivymd.uix.card import MDCard
-from kivymd.uix.list import OneLineListItem, TwoLineListItem, IconLeftWidget, MDList, ImageLeftWidget, OneLineAvatarIconListItem
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import StringProperty, NumericProperty, \
     BooleanProperty, AliasProperty, OptionProperty, \
     ListProperty, ObjectProperty, VariableListProperty, ColorProperty
+from kivymd.uix.datatables import MDDataTable
 from kivy.metrics import dp
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
+from kivy.clock import Clock
 
-
-# OpenCart Api
-# https://www.letscms.com/documents/api/opencart-rest-api.html
-
-
-# Urls kivy': en cursussen
-# Layout: https://kivy.org/doc/stable/guide/widgets.html#
-# course: https://www.udemy.com/user/johnelder3/
-# course: https://www.udemy.com/course/kivy-mobile-app/learn/lecture/7865250?components=available_coupons%2Cbuy_button%2Cbuy_for_team%2Ccacheable_add_to_cart%2Ccacheable_buy_button%2Ccacheable_deal_badge%2Ccacheable_discount_expiration%2Ccacheable_price_text%2Ccacheable_purchase_text%2Ccurated_for_ufb_notice_context%2Cdeal_badge%2Cdiscount_expiration%2Cgift_this_course%2Cincentives_context%2Cinstructor_links%2Clifetime_access_context%2Cmoney_back_guarantee%2Cprice_text%2Cpurchase_tabs_context%2Cpurchase%2Crecommendation%2Credeem_coupon%2Csidebar_container%2Csubscribe_team_modal_context%2Ctop_companies_notice_context#overview
-# course: https://www.udemy.com/course/kivymd-python-build-mobile-apps-using-material-design/learn/lecture/28108484#overview
-
-
-# https://www.youtube.com/watch?v=sa4AVMjjzNo ( keyboard )
-# Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
-# Window.softinput_mode = 'below_target'
+# https://www.youtube.com/watch?v=sa4AVMjjzNo
+Window.keyboard_anim_args = {'t': 'in_out_expo', 'd': .2 } # in_out_quart
+Window.softinput_mode = 'below_target'
+Window.size = (400, 600)
 
 KV = """
 #:import Clock kivy.clock.Clock
 
 Screen:
-
+    
     MDToolbar:
         id: toolbar
         pos_hint: {"top": 1}
@@ -47,31 +36,31 @@ Screen:
         elevation: 0
         left_action_items: [["menu", lambda x: nav_drawer.set_state('toggle')]]
 
-    MDNavigationLayout:
-        x: toolbar.height
-
+    MDNavigationLayout:  
+        x: toolbar.height 
+         
         ScreenManager:
-
+            
             id: screen_manager
 
             Screen_inlog:
                 id: screen_inlog
                 name: 'inlog'
-                userId: user
+                userId: user   
                 BoxLayout:
-
+                    
                     orientation: 'vertical'
                     padding: 50
-
+                    
                     Widget:
-
+                     
                     MDIcon:
                         icon: 'account'
                         icon_color: 1, 0, 1, 1
+                        font_size: 180
                         markup: True
                         halign: 'center'
-                        font_size: "128sp"
-                    
+                    # MDTextFieldRound:    
                     MDTextField:
                         id: user
                         focus: True
@@ -79,26 +68,24 @@ Screen:
                         helper_text: "Username"
                         helper_text_mode: "on_focus" # persitent verdwijnt text bij input
                         width: 20
-                        font_size: "48sp"
-                        # on_text_validate: screen_inlog.on_enter_user
-
+                        font_size: 48
+                        # on_text_validate: screen_inlog.on_enter_user 
+                        
                     MDTextField:
                         id: passwd
                         hint_text: "Password"
                         pos_hint: {"center_x": .5 }
                         width: 20
+                        font_size: 48           
                         password: True
-                        font_size: "48sp"
-
+                        
                     BoxLayout:
                         orientation: 'horizontal'
-                        padding: 0
-                        MDRectangleFlatIconButton:
-                            icon: "apps" 
-                            font_size: "24sp"
+                        padding: 20
+                        Button:
                             text: 'OK'
-                            pos_hint: {"center_x": .5 }
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)             
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -113,8 +100,8 @@ Screen:
                         id: searchmenu
                         icon_right: "text-search"
                         hint_text: "Search menu"
-                        font_size: "24sp"
                         width: 20
+                        font_size: 48
 
                     ScrollView:
                         size_hint: None, None
@@ -137,7 +124,7 @@ Screen:
                             OneLineListItem:
                                 text: "Real-time count"
                             OneLineListItem:
-                                text: "LDA"
+                                text: "LDA"           
                             OneLineListItem:
                                 text: "Replenishment RT"
                             OneLineListItem:
@@ -145,9 +132,9 @@ Screen:
                             OneLineListItem:
                                 text: "Putaway CT"
                             OneLineListItem:
-                                text: "Picking CT"
+                                text: "Picking CT"    
                             OneLineListItem:
-                                text: "Palletisation"
+                                text: "Palletisation"        
 
                             # maak uitklap
                             # Putaway CT
@@ -158,11 +145,11 @@ Screen:
                             # Picking HCT
                             #         RT
                             #         RPT
-
+            
             Screen_receiving:
                 name: 'receiving'
                 id: screen_receiving
-
+            
                 BoxLayout:
                     orientation: 'vertical'
                     id: menuBox
@@ -172,15 +159,16 @@ Screen:
                     MDTextField:
                         id: receiveId
                         hint_text: "Receive number"
-                        font_size: "48sp"
+                        # pos_hint: {"center_x": .5 }
                         width: 20
+                        font_size: 48 
                         on_text_validate: screen_receiving.on_enter_receiveId
                     MDLabel:
                         text: "Receipts 0"
                         font_style: "H3"
                         size_hint_y: None
-                        height: '200dp'
-
+                        height: '200dp'    
+                    
                     Spinner:
                         id: spinner_dock
                         size_hint: 1,.3
@@ -188,23 +176,37 @@ Screen:
                         background_color: 0,255,255,255
                         color: 0,0,0,1
                         values: [ "DOCK 130", "DOCK131","DOCK 132", "DOCK133","DOCK 134", "DOCK135","DOCK 136", "DOCK137", "DOCK138" ]
-                  
+                    # ScrollView:
+                    #     # size_hint: None, None
+                    #     size: "350dp", "200dp"
+                    #     # pos_hint: {"center_x": .5, "center_y": 1.2}
+                    #     MDList:
+                    #         OneLineListItem:
+                    #             text: "DOCK 123"
+                    #         OneLineListItem:
+                    #             text: "DOCK 124"
+                    #         OneLineListItem:
+                    #             text: "DOCK 125"
+                    #         OneLineListItem:
+                    #             text: "DOCK 126"                
+                                    
                     BoxLayout:
                         orientation: 'horizontal'
-                        padding: 0
-                        spacing: 10
-                        MDRectangleFlatIconButton:
+                        padding: 20
+                        Button:
                             text: 'OK'
+                            size_hint_y: 1
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "article"), .3)
-                        MDRectangleFlatIconButton:
+                        Button:
                             text: 'Cancel'
+                            size_hint_y: 1
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
 
 
             Screen_article:
                 name:  'article'
                 id: screen_article
-
+            
                 BoxLayout:
                     orientation: 'vertical'
                     id: menuBox
@@ -217,29 +219,30 @@ Screen:
                         hint_text: "Article"
                         pos_hint: {"center_x": .5 }
                         width: 50
-                        font_size: "48sp"
+                        font_size: 48
                         on_text: screen_article.num( self )
                     MDLabel:
                         text: "Selected:"
                         font_style: "H4"
                         size_hint_y: None
-                        height: '260dp'
-
+                        height: '260dp'    
+                        
+                              
                     BoxLayout:
                         orientation: 'horizontal'
-                        padding: 0
-                        spacing: 10
-                        MDRectangleFlatIconButton:
+                        padding: 10
+                        Button:
                             text: 'OK'
-                        MDRectangleFlatIconButton:
+                            size_hint_y: 1
+                        Button:
                             text: 'List'
-                            icon: 'view-list'
+                            size_hint_y: 1    
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "articlelist"), .3)
-                        MDRectangleFlatIconButton:
+                        Button:
                             text: 'Cancel'
-                            icon: 'cancel'
+                            size_hint_y: 1
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
-
+            
             Screen_articlelist:
                 name:  'articlelist'
                 id: screen_articlelist
@@ -249,7 +252,7 @@ Screen:
                     orientation: 'vertical'
                     id: menuBox
                     padding: 20
-
+                   
                     Widget:
                     # paul
                     ScrollView:
@@ -279,21 +282,20 @@ Screen:
                                 ImageLeftWidget:
                                     source: "MacBookAir.jpg"
 
+
                     BoxLayout:
                         orientation: 'horizontal'
-                        padding: 0
-                        spacing: 10                            
-                        MDRectangleFlatIconButton    
+                        padding: 10
+                        Button:
+                            text: 'OK'
+                            size_hint_y: 1
                             text: 'Cancel'
-                            icon: 'cancel'
-                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
+                            size_hint_y: 1
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)    
 
             Screen_leeg: # dynamic screen
                 name:  'leeg'
                 id: screen_leeg
-            Screen_leeg2: # dynamic screen
-                name:  'leeg2'
-                id: screen_leeg2    
 
 
         MDNavigationDrawer:
@@ -314,29 +316,29 @@ Screen:
                     font_style: "Subtitle1"
                     size_hint_y: None
                     height: self.texture_size[1]
-
+              
                 ScrollView: # Hamburger menu
                     MDlist:
                         id: md_list
-
+                        
                         OneLineIconListItem:
                             text: "Info"
                             IconLeftWidget:
                                 icon: "information-outline"
-
+                                
                         OneLineIconListItem:
                             text: "Login"
                             on_release: Clock.schedule_once(lambda x: app.set_screen_nav(screen_manager, nav_drawer, "inlog"), .3)
                             IconLeftWidget:
                                 icon: "login"
-
+                                
                         OneLineIconListItem:
                             text: "Afsluiten"
                             on_release: exit()
                             IconLeftWidget:
                                 icon: "logout"
-
-
+                                    
+                              
 """
 
 class ContentNavigationDrawer(BoxLayout):
@@ -346,105 +348,66 @@ class Screen_inlog(Screen):
     userId = ObjectProperty()
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+         
+        card = MDCard(orientation='vertical', pos_hint={
+                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .6))
+
+        # self.add_widget(card)
 
     def handle_ok(self, screenLogin , manager, name_screen):
-
+        
         manager.current = name_screen
-
-        if self.userId.text != 'admin':
-            close_button = MDFlatButton (text="Close",on_press=Screen_inlog.close_dialog)
-            more_button = MDFlatButton(text="More")
-            dialog = MDDialog(   title = 'Authentification',
-                                 text='input:' + self.userId.text ,
-                                 size_hint=( 1, None),
-                                 buttons=[ close_button ]
-                            )
-            dialog.open()
-        else:
-            manager.current = name_screen
-
+        
+        # if self.userId.text != 'admin':
+        #     close_button = MDFlatButton (text="Close",on_press=Screen_inlog.close_dialog)
+        #     more_button = MDFlatButton(text="More")
+        #     dialog = MDDialog(   title = 'Authentification',
+        #                          text='input:' + self.userId.text ,
+        #                          size_hint=( .3, None),
+        #                          buttons=[ close_button ]
+        #                     )
+        #     dialog.open()
+        # else:
+        #     manager.current = name_screen
+    
     def close_dialog(self):
         # screen.dialog.dismiss()
-        print (self.parent )
-        self.parent.parent.parent.parent.dismiss()
+        self.parent.parent.parent.parent.dismiss() 
 
     def on_enter_user( self ):
-        pass
-
+        pass    
+            
 
 class Screen_articlelist(Screen):
-    mylist = ObjectProperty()
-    def __init__(self, **kwargs):
+   mylist = ObjectProperty()
+   def __init__(self, **kwargs):
         super(Screen_articlelist,self).__init__(**kwargs)
-
+        
 class Screen_leeg(Screen):
     def __init__(self, **kwargs):
         super(Screen_leeg,self).__init__(**kwargs)
-
-        button = MDFlatButton( text='screen3',
-                               on_press=self.doeiets
-        )
-      
-        box = BoxLayout( orientation='vertical', padding=20)
-
-        text1 = MDTextField ( hint_text="", font_size="36sp", max_text_length="5" )
-        text2 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="36sp" )
-        text3 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="36sp" )
-      
-        text4 = MDTextField ( hint_text="", font_size="48sp", max_text_length="5" )
-        text5 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="48sp" )
-        text6 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="48sp" )
-      
-        text7 = MDTextField ( hint_text="", font_size="96sp", max_text_length="5" )
-        text8 = MDTextField ( mode="rectangle",hint_text="Rect", font_size="96sp" )
-        text9 = MDTextField ( icon_right="android" , mode="fill",hint_text="Rect", font_size="96sp" )
-      
-        button2 = MDFlatButton( text='zet font',
-                               on_press=self.zetfont
-        )
         
-        self.add_widget(box)
-        box.add_widget(text3)
-        box.add_widget(text6)
-        box.add_widget(text9)
-        box.add_widget(button)
-        box.add_widget(button2)
-
-    def doeiets( *args, **kwargs ):
-        sm = args[1].parent.parent.parent
-        sm.current = 'leeg2'
-
+        button = MDFlatButton( text='jaja',
+                               on_press=self.doeiets
+        )  
+        
+        card = MDCard(orientation='vertical', pos_hint={
+                        'center_x': .5, 'center_y': .5}, size_hint=(.9, .75))
+        box = BoxLayout( orientation='horizontal', padding=20)
+        self.add_widget(card)   
+        self.add_widget(box)   
+        card.add_widget(button)
+      
     
-    def zetfont( *args, **kwargs ):
-        pass
-
-class Screen_leeg2(Screen):
-    pass
-    def __init__(self, **kwargs):
-        super(Screen_leeg2,self).__init__(**kwargs)
-
-        button1 = MDFlatButton ( text='screen3',font_size="36sp" )
-        button2 = MDFlatButton ( text='screen3',font_size="48sp" )
-        button3 = MDFlatButton ( text='screen3',font_size="96sp" )
-
-        button4 = MDRectangleFlatIconButton( icon="android" ,text='screen3',font_size="24sp" )
-        button5 = MDFillRoundFlatIconButton( text='screen3',font_size="35sp",icon='android' )
-
-        box = BoxLayout( orientation='vertical', padding=20)
-        self.add_widget(box)
-        box.add_widget(button1)
-        box.add_widget(button2)
-        box.add_widget(button3)
-        box.add_widget(button4)
-        box.add_widget(button5)
-
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
-        sm.current = 'leeg2'    
-
-
-
-
+        
+        print ( args[1].parent )
+        button = MDFlatButton( text='Paulus')  
+        obj = args[1].parent
+        obj.add_widget(button)
+        
+    
 
 class Screen_menu(Screen):
 
@@ -452,10 +415,10 @@ class Screen_menu(Screen):
         super().__init__(**kwargs)
 
 class Screen_receiving(Screen):
-
+    
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+    
     def on_enter_receiveId( self ):
         pass
 
@@ -465,19 +428,24 @@ class Screen_article(Screen):
         super().__init__(**kwargs)
     def num(self, fieldobj):
         input = fieldobj.text
-        if len(input) and input[-1] not in ('0123456789'):
+        if len(input) and input[-1] not in ('0123456789'):        
             fieldobj.text = input.rstrip(input[-1])
 
 # class nodig voor hamburgermenu
 class MDlist(MDList):
-  def __init__(self, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+# class test(MDList):
+#     def __init__(self, **kwargs):
+#         super().__init__(**kwargs)
+#         self.add_widget(TwoLineListItem( text= 'dynamic'))
+                   
 class MainApp(MDApp):
     userId = ObjectProperty()
     menuBoxObj = ObjectProperty()
     def build(self):
-        self.theme_cls.theme_style = "Light"
+        self.theme_cls.theme_style = "Light" 
         self.theme_cls.primary_palette = "Indigo"
         self.theme_cls.accent_palette = "Blue"
 
@@ -486,10 +454,10 @@ class MainApp(MDApp):
         sm.add_widget(Screen_menu(name='article'))
         sm.add_widget(Screen_menu(name='receive'))
         sm.add_widget(Screen_menu(name='leeg'))
-
+    
         screen = Builder.load_string(KV)
         # screen = Builder.load_file('bol.kv')
-
+     
         return screen
 
     def set_screen_nav(self, manager, nav_drawer, name_screen):
@@ -497,6 +465,6 @@ class MainApp(MDApp):
         nav_drawer.set_state("toggle")
     def set_screen(self, manager, name_screen):
         manager.current = name_screen
-
+ 
 
 MainApp().run()

@@ -1,0 +1,49 @@
+
+
+<MainScreenManager>:
+    id: screen_manager
+
+    LoginScreen:
+        id: login_screen
+        name: 'LoginScreen'
+        manager: screen_manager
+
+    HomeScreen:
+        id: home_screen
+        name: 'HomeScreen'
+        email_address: login_screen.entered_email_address
+        password: login_screen.entered_password
+
+<LoginScreen>
+    BoxLayout:
+        orientation: 'vertical'
+        TextInput:
+            id: ti_email
+            multiline: False
+            size_hint_y: None
+            height: 40
+            font_size: 25
+
+        TextInput:
+            id: ti_password
+            multiline: False
+            size_hint_y: None
+            height: 40
+            font_size: 25
+
+        Button:
+            id: btn_login
+            text: 'Login!'
+            height: 100
+            width: 150
+            on_press:
+                root.check_input()
+
+<HomeScreen>
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: root.email_address
+
+        Label:
+            text: root.password
