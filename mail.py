@@ -1,5 +1,6 @@
 
 import sys
+import base64
 import os
 import argparse
 import smtplib
@@ -37,7 +38,14 @@ def main():
     msg['To'] = args.to
     #body = "Salut!"
     #msg.attach(MIMEText(body, 'plain'))
-    msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
+    #msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
+    #msg.attach(msgtext)
+
+    with open("testbestanden/Knipsel.PNG", "rb") as f:
+        encodedZip = base64.b64encode(f.read())
+        plaatje=(encodedZip.decode())
+
+    msgtext = MIMEText(f'<img src="data:image/png;base64,{plaatje}" alt="SomeImage" />', 'html')
     msg.attach(msgtext)
 
     for rij in attach_dict:
