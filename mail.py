@@ -11,6 +11,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
 
+# https://support.microsoft.com/en-us/topic/how-to-send-an-email-with-an-embedded-image-879d3e13-6bc4-6c61-417a-b7419d304d52
+
 def main():
 
     parser = argparse.ArgumentParser(description='Mail')
