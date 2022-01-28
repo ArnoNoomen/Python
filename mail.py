@@ -38,6 +38,7 @@ def main():
     msg['Subject'] = args.subject
     msg['From'] = smtp_dict['from']
     msg['To'] = args.to
+    print(msg)
     #body = "Salut!"
     #msg.attach(MIMEText(body, 'plain'))
     #msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
@@ -62,15 +63,15 @@ def main():
             part.add_header('Content-Disposition', 'attachment', filename=rij['attachname'])
         msg.attach(part)
 
-    try:
-        server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
-        server.starttls()
-        server.login(smtp_dict['from'], smtp_dict['pwd'])
-        server.send_message(msg)
-        server.quit()
-    except:
-        print('fout met verzenden')
-        sys.exit(1)
+    ##try:
+    ##    server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
+    ##    server.starttls()
+    ##    server.login(smtp_dict['from'], smtp_dict['pwd'])
+    ##    server.send_message(msg)
+    ##    server.quit()
+    ##except:
+    ##    print('fout met verzenden')
+    ##    sys.exit(1)
 
 if __name__ == '__main__':
     main()
