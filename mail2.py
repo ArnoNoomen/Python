@@ -37,8 +37,6 @@ def main():
     msgroot.preamble = 'This is a multi-part message in MIME format.'
     msgalternative = MIMEMultipart('alternative')
     msgroot.attach(msgalternative)
-    #msgText = MIMEText('This is the alternative plain text message.')
-    #msgAlternative.attach(msgText)
     msgtext = MIMEText('<img src="cid:image1">', 'html')
     msgalternative.attach(msgtext)
     fp1 = open('testbestanden/Knipsel.PNG', 'rb')
