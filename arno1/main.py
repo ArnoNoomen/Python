@@ -7,6 +7,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.screen import Screen
 
 class MainApp(MDApp):
+    @staticmethod
     def show_data(*args):
         oke_button = MDFlatButton(text='Oke2',on_press=MainApp.close_dialog)
         MainApp.mydialog = MDDialog(text=f'{MainApp.screen.width} {MainApp.screen.height}',
@@ -14,6 +15,7 @@ class MainApp(MDApp):
         MainApp.mydialog.text = MainApp.mydialog.text + f'\n{MainApp.mydialog.width} {MainApp.mydialog.height}'
         MainApp.mydialog.text = MainApp.mydialog.text + f'\n{MainApp.username.width} {MainApp.username.height}'
         MainApp.mydialog.open()
+    @staticmethod
     def close_dialog(*args):
         MainApp.mydialog.dismiss()
     def build(self):
