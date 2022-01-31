@@ -16,14 +16,10 @@ Screen:
 class MainApp(MDApp):
 
     def build(self):
+        self.icon = "android.png"
+        self.title = "test"
         screen = Builder.load_string(LISTHELPER)
         return screen
-
-    def on_start1(self):
-        print('a')
-        for i in range(20):
-            item = OneLineListItem(text='Item ' + str(i))
-            self.root.ids.container.add_widget(item)
 
     def on_start(self):
         webrequest_dict = {}
@@ -43,10 +39,7 @@ class MainApp(MDApp):
             conn = http.client.HTTPConnection(webrequest_dict["site"])
         conn.request("GET", webrequest_dict["pagina"], None, myheader)
         res = conn.getresponse()
-        print(res.status, res.reason)
         body_dict = json.loads(res.read().decode("utf-8"))
-        print(body_dict['success'])
-        print(body_dict['error'])
         for rij in body_dict['data']:
             item = OneLineListItem(text=rij['name'])
             self.root.ids.container.add_widget(item)
