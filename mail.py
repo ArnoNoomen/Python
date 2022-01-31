@@ -1,5 +1,6 @@
 
 import sys
+import base64
 import os
 import argparse
 import smtplib
@@ -9,6 +10,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.image import MIMEImage
 from email.mime.base import MIMEBase
+
+# https://support.microsoft.com/en-us/topic/how-to-send-an-email-with-an-embedded-image-879d3e13-6bc4-6c61-417a-b7419d304d52
 
 def main():
 
@@ -35,9 +38,17 @@ def main():
     msg['Subject'] = args.subject
     msg['From'] = smtp_dict['from']
     msg['To'] = args.to
+    print(msg)
     #body = "Salut!"
     #msg.attach(MIMEText(body, 'plain'))
-    msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
+    #msgtext = MIMEText('<img src="cid:image1"><br><img src="cid:image2">', 'html')
+    #msg.attach(msgtext)
+
+    with open("testbestanden/Knipsel.PNG", "rb") as f:
+        encodedZip = base64.b64encode(f.read())
+        plaatje=(encodedZip.decode())
+
+    msgtext = MIMEText(f'<img src="data:image/png;base64,{plaatje}" alt="SomeImage" />', 'html')
     msg.attach(msgtext)
 
     for rij in attach_dict:
@@ -52,15 +63,15 @@ def main():
             part.add_header('Content-Disposition', 'attachment', filename=rij['attachname'])
         msg.attach(part)
 
-    try:
-        server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
-        server.starttls()
-        server.login(smtp_dict['from'], smtp_dict['pwd'])
-        server.send_message(msg)
-        server.quit()
-    except:
-        print('fout met verzenden')
-        sys.exit(1)
+    ##try:
+    ##    server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
+    ##    server.starttls()
+    ##    server.login(smtp_dict['from'], smtp_dict['pwd'])
+    ##    server.send_message(msg)
+    ##    server.quit()
+    ##except:
+    ##    print('fout met verzenden')
+    ##    sys.exit(1)
 
 if __name__ == '__main__':
     main()
