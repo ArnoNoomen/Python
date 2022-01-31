@@ -48,9 +48,11 @@ def main():
     conn.request("GET", webrequest_dict["pagina"], None, myheader)
     res = conn.getresponse()
     print(res.status, res.reason)
-    data1 = res.read()
-    data2 = data1.decode("utf-8")
-    print(data2)
+    body_dict = json.loads(res.read().decode("utf-8"))
+    print(body_dict['success'])
+    print(body_dict['error'])
+    for rij in body_dict['data']:
+        print(rij['name'])
 
 if __name__ == '__main__':
     main()
