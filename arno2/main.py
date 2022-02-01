@@ -17,24 +17,25 @@ Screen:
 """
 
 def got_success(*args):
-    print('on_success')
+    print(MainApp.rrr)
     for rij in args[1]['data']:
         item = OneLineListItem(text=rij['name'])
         print(rij['name'])
         #self.root.ids.container.add_widget(item)
 
-
 def got_error(*args):
-    print('on_error')
+    print(args[1])
 
 def got_progress(*args):
-    print('on_progress')
+    pass
 
 def got_failure(*args):
     print('on_failure')
-    print(args[1])
+
 
 class MainApp(MDApp):
+
+    rrr = 'eee'
 
     def build(self):
         self.icon = "android.png"
@@ -54,16 +55,7 @@ class MainApp(MDApp):
         params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
         myheader = {'X-Oc-Merchant-Id': '123'}
 
-        #if webrequest_dict["protocol"].upper() == 'HTTPS':
-        #    conn = http.client.HTTPSConnection(webrequest_dict["site"])
-        #else:
-        #    conn = http.client.HTTPConnection(webrequest_dict["site"])
-        #conn.request("GET", webrequest_dict["pagina"], None, myheader)
-        #res = conn.getresponse()
-        #body_dict = json.loads(res.read().decode("utf-8"))
-
-        url1 = 'http://' + webrequest_dict["site"] + webrequest_dict["pagina"]
-        req = UrlRequest(url=url1,
+        req = UrlRequest(url='http://' + webrequest_dict["site"] + webrequest_dict["pagina"],
                         on_success=got_success,
                         on_failure=got_failure,
                         on_error=got_error,
