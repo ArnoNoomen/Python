@@ -29,10 +29,7 @@ def main():
         print('smtp.json is niet aanwezig')
         sys.exit(1)
    
-    for email in emails:
-
-        print(email['to'])
-       
+    for email in emails:       
         msgroot = MIMEMultipart('related')
         msgroot['Subject'] = subject
         msgroot['From'] = smtp_dict['from']
@@ -55,10 +52,13 @@ def main():
         # print(smtp_dict['port'])
         # print(smtp_dict['from'])
 
-        server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
+        r = server = smtplib.SMTP(smtp_dict['server'], smtp_dict['port'])
+        print (r)
         server.starttls()
-        server.login(smtp_dict['from'], smtp_dict['pwd'])
-        server.send_message(msgroot)
+        r = server.login(smtp_dict['from'], smtp_dict['pwd'])
+        print (r)
+        r = server.send_message(msgroot)
+        print (r)
         server.quit()
     except:
         print('fout met verzenden')
