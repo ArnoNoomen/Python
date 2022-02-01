@@ -48,7 +48,7 @@ def close_dialog(*args):
 
 def got_failure(*args):
     oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
-    MainApp.mydialog = MDDialog(text=f'{args[1]}',
+    MainApp.mydialog = MDDialog(text='fout',
                                     size_hint=(0.7, 1), buttons=[oke_button])
     MainApp.mydialog.open()
 
