@@ -2,6 +2,9 @@ from calendar import Calendar
 from logging import root
 import os 
 import re
+import json
+import http.client
+import urllib.parse
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.button import MDFlatButton, MDRectangleFlatIconButton, MDFillRoundFlatIconButton
@@ -98,7 +101,7 @@ Screen:
                             font_size: "24sp"
                             text: 'OK'
                             pos_hint: {"center_x": .5 }
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "leeg2"), .3)
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -251,7 +254,6 @@ Screen:
                     padding: 20
 
                     Widget:
-                    # paul
                     ScrollView:
                         size_hint: None, None
                         size: "350dp", "400dp"
@@ -378,6 +380,7 @@ class Screen_articlelist(Screen):
         super(Screen_articlelist,self).__init__(**kwargs)
 
 class Screen_leeg(Screen):
+    # paul
     def __init__(self, **kwargs):
         super(Screen_leeg,self).__init__(**kwargs)
 
@@ -402,13 +405,37 @@ class Screen_leeg(Screen):
         button2 = MDFlatButton( text='zet font',
                                on_press=self.zetfont
         )
-        
+        myList = []
+        self.web_request( myList )
+       
+        mytable = MDDataTable(
+                                pos_hint={'center_x': 0.5, 'center_y': 0.5},
+                                #  size_hint=(0.9, 0.6),
+                                check=True,
+                                rows_num=10,
+                                column_data=[
+                                     ("Name", dp(18)),
+                                     ("Food", dp(20)),
+                                     ("Calories", dp(20))
+                                ],
+                                row_data=[
+                                      ("1", "Burger", "300"),
+                                      ("2", "Oats", "200"),
+                                      ("3", "Oats", "200"),
+                                      ("4", "Oats", "200"),
+                                     ("5", "Oats", "200"),
+                                     ("6", "Oats", "200"),
+                                     ("7", "Oats", "200"),
+                                     ("8", "Oats", "200")
+                                ]
+
+                                 )
         self.add_widget(box)
-        box.add_widget(text3)
-        box.add_widget(text6)
-        box.add_widget(text9)
-        box.add_widget(button)
-        box.add_widget(button2)
+        box.add_widget(mytable)
+        # box.add_widget(text6)
+        # box.add_widget(text9)
+        # box.add_widget(button)
+        # box.add_widget(button2)
 
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
@@ -417,6 +444,34 @@ class Screen_leeg(Screen):
     
     def zetfont( *args, **kwargs ):
         pass
+
+    def web_request( self, resultData):
+        webrequest_dict = {}
+        body_dict = {}
+        mylist = []
+        try:
+            with open("testbestanden/webrequest.json", encoding='iso-8859-1') as fp1:
+                webrequest_dict = json.loads(fp1.read())
+        except FileNotFoundError:
+            print('testbestanden/webrequest.json is niet aanwezig')
+        myheader = {'X-Oc-Merchant-Id': '123'}
+
+        if webrequest_dict["protocol"].upper() == 'HTTPS':
+            conn = http.client.HTTPSConnection(webrequest_dict["site"])
+        else:
+            conn = http.client.HTTPConnection(webrequest_dict["site"])
+        conn.request("GET", webrequest_dict["pagina"], None, myheader)
+        res = conn.getresponse()
+        body_dict = json.loads(res.read().decode("utf-8"))
+        
+        # myresultData = dict(body_dict['data'])
+        for rij in body_dict['data']:
+            myset = { rij['name'], rij['name'] }
+            mylist.append ( myset )
+
+        print(mylist)
+
+           
 
 class Screen_leeg2(Screen):
     pass
@@ -430,13 +485,29 @@ class Screen_leeg2(Screen):
         button4 = MDRectangleFlatIconButton( icon="android" ,text='screen3',font_size="24sp" )
         button5 = MDFillRoundFlatIconButton( text='screen3',font_size="35sp",icon='android' )
 
+        mylist = [ 'banaan', 'appel', 'kers']
+        mylist.append("orange")
+        Screen_leeg.web_request( self, mylist)
+        # Creating a Simple List
+        
+        scroll = ScrollView()
+
+        list_view = MDList()
+        for i in range( len(mylist) ):   
+            items = OneLineListItem(text=str(i - 1) + mylist[i - 1] )
+            list_view.add_widget(items)
+
+        scroll.add_widget(list_view)
+        # End List
+
+
         box = BoxLayout( orientation='vertical', padding=20)
         self.add_widget(box)
-        box.add_widget(button1)
-        box.add_widget(button2)
-        box.add_widget(button3)
-        box.add_widget(button4)
-        box.add_widget(button5)
+        box.add_widget(scroll)
+        # box.add_widget(button2)
+        # box.add_widget(button3)
+        # box.add_widget(button4)
+        # box.add_widget(button5)
 
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
@@ -497,6 +568,5 @@ class MainApp(MDApp):
         nav_drawer.set_state("toggle")
     def set_screen(self, manager, name_screen):
         manager.current = name_screen
-
 
 MainApp().run()
