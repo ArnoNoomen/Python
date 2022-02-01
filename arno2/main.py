@@ -16,14 +16,23 @@ Screen:
             id: container
 """
 
-def got_json(req, result):
-    print('got_json')
-    print(result)
+def got_success(*args):
+    print('on_success')
+    for rij in args[1]['data']:
+        item = OneLineListItem(text=rij['name'])
+        print(rij['name'])
+        #self.root.ids.container.add_widget(item)
 
-def got_error(req, result):
-    print('got_error')
-    print(result)
-    print('b')
+
+def got_error(*args):
+    print('on_error')
+
+def got_progress(*args):
+    print('on_progress')
+
+def got_failure(*args):
+    print('on_failure')
+    print(args[1])
 
 class MainApp(MDApp):
 
@@ -45,21 +54,20 @@ class MainApp(MDApp):
         params = urllib.parse.urlencode({'@number': 12524, '@type': 'issue', '@action': 'show'})
         myheader = {'X-Oc-Merchant-Id': '123'}
 
-        if webrequest_dict["protocol"].upper() == 'HTTPS':
-            conn = http.client.HTTPSConnection(webrequest_dict["site"])
-        else:
-            conn = http.client.HTTPConnection(webrequest_dict["site"])
-        conn.request("GET", webrequest_dict["pagina"], None, myheader)
-        res = conn.getresponse()
-        body_dict = json.loads(res.read().decode("utf-8"))
+        #if webrequest_dict["protocol"].upper() == 'HTTPS':
+        #    conn = http.client.HTTPSConnection(webrequest_dict["site"])
+        #else:
+        #    conn = http.client.HTTPConnection(webrequest_dict["site"])
+        #conn.request("GET", webrequest_dict["pagina"], None, myheader)
+        #res = conn.getresponse()
+        #body_dict = json.loads(res.read().decode("utf-8"))
 
-        url1 = webrequest_dict["site"] + webrequest_dict["pagina"]
-        print(url1)
-        req = UrlRequest(url=url1, on_success=got_json, on_error=got_error)
-        print('a')
-        print(res)
-        #for rij in body_dict['data']:
-        #    item = OneLineListItem(text=rij['name'])
-        #    self.root.ids.container.add_widget(item)
+        url1 = 'http://' + webrequest_dict["site"] + webrequest_dict["pagina"]
+        req = UrlRequest(url=url1,
+                        on_success=got_success,
+                        on_failure=got_failure,
+                        on_error=got_error,
+                        on_progress=got_progress,
+                        req_headers=myheader)
 
 MainApp().run()
