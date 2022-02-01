@@ -1,4 +1,3 @@
-import urllib.parse
 import sys
 import json
 from kivy.network.urlrequest import UrlRequest
