@@ -15,9 +15,12 @@ Screen:
 """
 
 def got_success(*args):
-    for rij in args[1]['data']:
-        item = OneLineListItem(text=rij['name'])
-        MainApp.screen1.ids.container.add_widget(item)
+    try:
+        for rij in args[1]['data']:
+            item = OneLineListItem(text=rij['name'])
+            MainApp.screen1.ids.container.add_widget(item)
+    except:
+        pass
 
 def got_error(*args):
     print(args[1])
