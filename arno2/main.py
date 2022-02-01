@@ -4,6 +4,8 @@ from kivy.network.urlrequest import UrlRequest
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineListItem
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
 
 # https://kivy.org/doc/stable/api-kivy.network.urlrequest.html
 
@@ -23,13 +25,22 @@ def got_success(*args):
         pass
 
 def got_error(*args):
-    print(args[1])
+    oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
+    MainApp.mydialog = MDDialog(text=f'{args[1]}',
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+    MainApp.mydialog.open()
 
 def got_progress(*args):
     pass
 
+def close_dialog(*args):
+    MainApp.mydialog.dismiss()
+
 def got_failure(*args):
-    print(args[1])
+    oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
+    MainApp.mydialog = MDDialog(text=f'{args[1]}',
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+    MainApp.mydialog.open()
 
 class MainApp(MDApp):
 
