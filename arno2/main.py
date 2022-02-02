@@ -22,7 +22,8 @@ Screen:
 
 def ophalen_image(url):
     MainApp.basename = os.path.basename(url)
-    UrlRequest(url,on_success=got_success1,
+    url1 = url.replace('https://','http://')
+    UrlRequest(url1,on_success=got_success1,
                    on_failure=got_failure1,
                    on_error=got_error1,
                    req_headers=variabelen.header1)
@@ -86,6 +87,6 @@ class MainApp(MDApp):
                         on_error=got_error,
                         on_progress=got_progress,
                         req_headers=variabelen.header1)
-        ophalen_image('http://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg')
+        ophalen_image('https://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg')
 
 MainApp().run()
