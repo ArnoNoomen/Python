@@ -48,7 +48,10 @@ def got_success(*args):
         for rij in args[1]['data']:
             item = OneLineIconListItem(text=rij['name'])
             url1 = rij['image'].replace('https://','http://')
-            aimg = AsyncImage(source=url1)
+            print(url1)
+            #aimg = AsyncImage(source=url1)
+            #with open(os.path.basename(url1), 'w+b') as fp1:
+            #    fp1.write(aimg)
             icons = IconLeftWidget(icon="android")
             item.add_widget(icons)
             MainApp.screen1.ids.container.add_widget(item)
