@@ -1,4 +1,5 @@
 import sys
+import os
 import json
 from kivy.network.urlrequest import UrlRequest
 from kivy.lang import Builder
@@ -18,6 +19,22 @@ Screen:
         MDList:
             id: container
 """
+
+def ophalen_image(url):
+    MainApp.basename = os.path.basename(url)
+    UrlRequest(url,on_success=got_success1,
+                   on_failure=got_failure1,
+                   on_error=got_error1,
+                   req_headers=variabelen.header1)
+
+def got_success1(*args):
+    with open(MainApp.basename, 'w+b') as fp1:
+        fp1.write(args[1])
+
+def got_failure1(*args):
+    print('failure')
+def got_error1(*args):
+    print('error')
 
 def got_success(*args):
     try:
@@ -69,5 +86,6 @@ class MainApp(MDApp):
                         on_error=got_error,
                         on_progress=got_progress,
                         req_headers=variabelen.header1)
+        ophalen_image('http://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg')
 
 MainApp().run()
