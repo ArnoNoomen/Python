@@ -2,10 +2,12 @@ from multiprocessing.connection import wait
 import sys
 import os
 import json
+import filelock
 from kivy.network.urlrequest import UrlRequest
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineListItem
+from kivymd.uix.list import OneLineAvatarListItem
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 sys.path.insert(1, '../testbestanden')
@@ -23,20 +25,16 @@ Screen:
 
 def ophalen_image(url):
     MainApp.basename = os.path.basename(url)
-    #print(f' a {MainApp.basename}')
     url1 = url.replace('https://','http://')
-    MainApp.req = UrlRequest(url1,on_success=got_success1,
+    UrlRequest(url1,on_success=got_success1,
                    on_failure=got_failure1,
                    on_error=got_error1,
                    req_headers=variabelen.header1)
-    wait
 
 def got_success1(*args):
-
-    print(MainApp.req.url)
-    #print(f' b {MainApp.basename}')
-    with open(MainApp.basename, 'w+b') as fp1:
-        fp1.write(args[1])
+    pass
+    #with open(MainApp.basename, 'w+b') as fp1:
+    #    fp1.write(args[1])
 
 def got_failure1(*args):
     print('failure')
@@ -46,7 +44,7 @@ def got_error1(*args):
 def got_success(*args):
     try:
         for rij in args[1]['data']:
-            item = OneLineListItem(text=rij['name'])
+            item = OneLineAvatarListItem(text=rij['name'])
             ophalen_image(rij['image'])
 
             MainApp.screen1.ids.container.add_widget(item)
@@ -56,7 +54,7 @@ def got_success(*args):
         #except:
         #    pass
         oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
-        MainApp.mydialog = MDDialog(text='Foutje',
+        MainApp.mydialog = MDDialog(text='Foutjee',
                                     size_hint=(0.7, 1), buttons=[oke_button])
         MainApp.mydialog.open()
 
