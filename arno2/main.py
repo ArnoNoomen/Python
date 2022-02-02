@@ -8,8 +8,10 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.list import OneLineListItem
 from kivymd.uix.list import OneLineAvatarListItem
+from kivymd.uix.list import OneLineIconListItem, IconLeftWidget
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
+from kivy.uix.image import AsyncImage
 sys.path.insert(1, '../testbestanden')
 sys.path.insert(2, 'D:\\Github\\Python\\testbestanden')
 import variabelen
@@ -44,17 +46,15 @@ def got_error1(*args):
 def got_success(*args):
     try:
         for rij in args[1]['data']:
-            item = OneLineAvatarListItem(text=rij['name'])
-            ophalen_image(rij['image'])
-
+            item = OneLineIconListItem(text=rij['name'])
+            url1 = rij['image'].replace('https://','http://')
+            aimg = AsyncImage(source=url1)
+            icons = IconLeftWidget(icon="android")
+            item.add_widget(icons)
             MainApp.screen1.ids.container.add_widget(item)
-    except:
-        #try:
-        #    print(args[1])
-        #except:
-        #    pass
+    except BaseException as err:
         oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
-        MainApp.mydialog = MDDialog(text='Foutjee',
+        MainApp.mydialog = MDDialog(text=f"Unexpected {err=}, {type(err)=}",
                                     size_hint=(0.7, 1), buttons=[oke_button])
         MainApp.mydialog.open()
 
