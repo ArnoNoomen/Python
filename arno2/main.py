@@ -1,3 +1,4 @@
+from multiprocessing.connection import wait
 import sys
 import os
 import json
@@ -22,13 +23,18 @@ Screen:
 
 def ophalen_image(url):
     MainApp.basename = os.path.basename(url)
+    #print(f' a {MainApp.basename}')
     url1 = url.replace('https://','http://')
-    UrlRequest(url1,on_success=got_success1,
+    MainApp.req = UrlRequest(url1,on_success=got_success1,
                    on_failure=got_failure1,
                    on_error=got_error1,
                    req_headers=variabelen.header1)
+    wait
 
 def got_success1(*args):
+
+    print(MainApp.req.url)
+    #print(f' b {MainApp.basename}')
     with open(MainApp.basename, 'w+b') as fp1:
         fp1.write(args[1])
 
@@ -41,14 +47,16 @@ def got_success(*args):
     try:
         for rij in args[1]['data']:
             item = OneLineListItem(text=rij['name'])
+            ophalen_image(rij['image'])
+
             MainApp.screen1.ids.container.add_widget(item)
     except:
-        try:
-            print(args[1]['error'])
-        except:
-            pass
+        #try:
+        #    print(args[1])
+        #except:
+        #    pass
         oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
-        MainApp.mydialog = MDDialog(text='Fout',
+        MainApp.mydialog = MDDialog(text='Foutje',
                                     size_hint=(0.7, 1), buttons=[oke_button])
         MainApp.mydialog.open()
 
@@ -65,8 +73,8 @@ def close_dialog(*args):
     MainApp.mydialog.dismiss()
 
 def got_failure(*args):
-    oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
-    MainApp.mydialog = MDDialog(text='fout',
+    oke_button = MDFlatButton(text='Oke1',on_press=close_dialog)
+    MainApp.mydialog = MDDialog(text=f'{args[1]}',
                                     size_hint=(0.7, 1), buttons=[oke_button])
     MainApp.mydialog.open()
 
@@ -87,6 +95,5 @@ class MainApp(MDApp):
                         on_error=got_error,
                         on_progress=got_progress,
                         req_headers=variabelen.header1)
-        ophalen_image('https://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg')
 
 MainApp().run()
