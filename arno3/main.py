@@ -61,11 +61,12 @@ class MainApp(MDApp):
         MainApp.screen1 = Builder.load_string(KV)
         return MainApp.screen1
     def on_start(self):
-        UrlRequest(url=variabelen.url1,
+        req = UrlRequest(url=variabelen.url1,
                 on_success=got_success,
                 on_failure=got_failure,
                 on_error=got_error,
                 on_progress=got_progress,
                 req_headers=variabelen.header1)
+        print(req.resp_status)
 
 MainApp().run()
