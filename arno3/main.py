@@ -1,16 +1,13 @@
-#from kivymd.app import MDApp
-#from kivy.uix.image import AsyncImage
-#
-#class MainApp(MDApp):
-#    def build(self):
-#        url1 = 'http://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg'
-#        img = AsyncImage(source=url1)
-#        return img
-#
-#MainApp().run()
-#
+import sys
 from kivymd.app import MDApp
 from kivy.lang import Builder
+from kivymd.uix.imagelist import SmartTileWithLabel
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivy.network.urlrequest import UrlRequest
+sys.path.insert(1, '../testbestanden')
+sys.path.insert(2, 'D:\\Github\\Python\\testbestanden')
+import variabelen
 
 KV = '''
 ScrollView:
@@ -25,23 +22,50 @@ ScrollView:
         padding: dp(4), dp(4)
         spacing: dp(4)
 
-        SmartTileWithLabel:
-            source: "http://inalphen.nl/ws/image/cache/catalog/demo/htc_touch_hd_1-500x500.jpg"
-
-        SmartTileWithLabel:
-            source: "cat-2.jpg"
-            tile_text_color: app.theme_cls.accent_color
-
-        SmartTileWithLabel:
-            source: "cat-3.jpg"
-            tile_text_color: app.theme_cls.accent_color
 '''
 
-class MyApp(MDApp):
-    def build(self):
-        root = Builder.load_string(KV)
-        return root
-    def on_start(self):
-        pass
+def got_success(*args):
+    try:
+        for rij in args[1]['data']:
+            url1 = rij['image'].replace('https://','http://')
+            item = SmartTileWithLabel(source=url1)
+            MainApp.screen1.ids.mygridlayout.add_widget(item)
 
-MyApp().run()
+    except BaseException as err:
+        oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
+        MainApp.mydialog = MDDialog(text=f"Unexpected {err=}, {type(err)=}",
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+        MainApp.mydialog.open()
+
+
+def got_error(*args):
+    oke_button = MDFlatButton(text='Oke',on_press=close_dialog)
+    MainApp.mydialog = MDDialog(text=f'{args[1]}',
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+    MainApp.mydialog.open()
+
+def got_progress(*args):
+    pass
+
+def close_dialog(*args):
+    MainApp.mydialog.dismiss()
+
+def got_failure(*args):
+    oke_button = MDFlatButton(text='Oke1',on_press=close_dialog)
+    MainApp.mydialog = MDDialog(text=f'{args[1]}',
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+    MainApp.mydialog.open()
+
+class MainApp(MDApp):
+    def build(self):
+        MainApp.screen1 = Builder.load_string(KV)
+        return MainApp.screen1
+    def on_start(self):
+        UrlRequest(url=variabelen.url1,
+                on_success=got_success,
+                on_failure=got_failure,
+                on_error=got_error,
+                on_progress=got_progress,
+                req_headers=variabelen.header1)
+
+MainApp().run()
