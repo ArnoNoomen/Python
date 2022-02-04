@@ -28,6 +28,7 @@ def got_success(*args):
     try:
         for rij in args[1]['data']:
             url1 = rij['image'].replace('https://','http://')
+            print(url1)
             item = SmartTileWithLabel(source=url1)
             MainApp.screen1.ids.mygridlayout.add_widget(item)
 
