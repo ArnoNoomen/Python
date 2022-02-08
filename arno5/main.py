@@ -48,6 +48,7 @@ class Application(App):
         return Builder.load_string(KV)
 
     def check_pull_refresh(self, view, grid):
+
         max_pixel = 200
         to_relative = max_pixel / (grid.height - view.height)
         if view.scroll_y < 1.0 + to_relative or self.refreshing:
