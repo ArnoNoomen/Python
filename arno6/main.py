@@ -15,7 +15,7 @@ import variabelen
 def got_success(*args):
     try:
         for rij in args[1]['data']:
-            data1 = (rij['name'],rij['model'],rij['price'],rij['quantity'])
+            data1 = (0,rij['name'],rij['model'],rij['price'],rij['quantity'])
             MainApp.mytable.row_data.append(data1)
 
     except BaseException as err:
@@ -31,11 +31,14 @@ class MainApp(MDApp):
         MainApp.mytable = MDDataTable(
             pos_hint = {'center_x': 0.5, 'center_y': 0.5},
             size_hint = (0.9, 0.6),
+            rows_num = 4,
+            use_pagination=True,
             check = TRUE,
             column_data = [
-                ("Product Name", dp(50)),
+                ("Image", dp(50)),
+                ("Product Name", dp(50), self.sort_on_name),
                 ("Model", dp(30)),
-                ("Price", dp(30)),
+                ("Price", dp(30), self.sort_on_price),
                 ("Quantity", dp(30))
                 ],
         )
@@ -48,6 +51,22 @@ class MainApp(MDApp):
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "BlueGray"
         return screen
+
+    def sort_on_price(self, data):
+        return zip(
+            *sorted(
+                enumerate(data),
+                key=lambda l: l[1][3]
+            )
+        )
+
+    def sort_on_name(self, data):
+        return zip(
+            *sorted(
+                enumerate(data),
+                key=lambda l: l[1][3]
+            )
+        )
 
     def addrow(*args):
         print(variabelen.url1)
