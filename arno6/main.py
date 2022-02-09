@@ -5,6 +5,7 @@ from kivymd.app import MDApp
 from kivymd.uix.screen import Screen
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
 
 class MainApp(MDApp):
 
@@ -40,9 +41,16 @@ class MainApp(MDApp):
         MainApp.mytable.row_data.append(rij)
 
     def checked(self, instance_table, current_row):
-        print(instance_table)
+        oke_button = MDFlatButton(text='Oke',on_press=MainApp.dismiss1)
+        print(current_row[0])
+        MainApp.mydialog = MDDialog(text=current_row[0],
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+        MainApp.mydialog.open()
 
     def row_checked(self, instance_table, instance_row):
         pass
+
+    def dismiss1(*args):
+        MainApp.mydialog.dismiss()
 
 MainApp().run()
