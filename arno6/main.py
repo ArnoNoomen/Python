@@ -1,3 +1,4 @@
+import sys
 from pickle import TRUE
 from kivy.lang import Builder
 from kivy.metrics import dp
@@ -6,6 +7,22 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
+from kivy.network.urlrequest import UrlRequest
+sys.path.insert(1, '../testbestanden')
+sys.path.insert(2, 'D:\\Github\\Python\\testbestanden')
+import variabelen
+
+def got_success(*args):
+    try:
+        for rij in args[1]['data']:
+            data1 = (rij['name'],rij['name'],rij['name'],rij['name'])
+            MainApp.mytable.row_data.append(data1)
+    
+    except BaseException as err:
+        oke_button = MDFlatButton(text='Oke',on_press=MainApp.dismiss1)
+        MainApp.mydialog = MDDialog(text=f"Unexpected {err=}, {type(err)=}",
+                                    size_hint=(0.7, 1), buttons=[oke_button])
+        MainApp.mydialog.open()
 
 class MainApp(MDApp):
 
@@ -21,10 +38,10 @@ class MainApp(MDApp):
                 ("Email Address", dp(30)),
                 ("Phone number", dp(30))
                 ],
-            row_data = [
-                ("a","b","c","d"),
-                ("a","b","c","d")
-            ]
+            #row_data = [
+            #    ("a","b","c","d"),
+            #    ("a","b","c","d")
+            #]
         )
         MainApp.mytable.bind(on_check_press=self.checked)
         MainApp.mytable.bind(on_row_press=self.row_checked)
@@ -37,12 +54,13 @@ class MainApp(MDApp):
         return screen
 
     def addrow(*args):
-        rij = ("a2","b","c","d")
-        MainApp.mytable.row_data.append(rij)
+        print(variabelen.url1)
+        UrlRequest(url=variabelen.url1,
+                on_success=got_success,
+                req_headers=variabelen.header1)
 
     def checked(self, instance_table, current_row):
         oke_button = MDFlatButton(text='Oke',on_press=MainApp.dismiss1)
-        print(current_row[0])
         MainApp.mydialog = MDDialog(text=current_row[0],
                                     size_hint=(0.7, 1), buttons=[oke_button])
         MainApp.mydialog.open()
