@@ -15,9 +15,9 @@ import variabelen
 def got_success(*args):
     try:
         for rij in args[1]['data']:
-            data1 = (rij['name'],rij['name'],rij['name'],rij['name'])
+            data1 = (rij['name'],rij['model'],rij['price'],rij['quantity'])
             MainApp.mytable.row_data.append(data1)
-    
+
     except BaseException as err:
         oke_button = MDFlatButton(text='Oke',on_press=MainApp.dismiss1)
         MainApp.mydialog = MDDialog(text=f"Unexpected {err=}, {type(err)=}",
@@ -33,15 +33,11 @@ class MainApp(MDApp):
             size_hint = (0.9, 0.6),
             check = TRUE,
             column_data = [
-                ("First Name", dp(30)),
-                ("Last Name", dp(30)),
-                ("Email Address", dp(30)),
-                ("Phone number", dp(30))
+                ("Product Name", dp(50)),
+                ("Model", dp(30)),
+                ("Price", dp(30)),
+                ("Quantity", dp(30))
                 ],
-            #row_data = [
-            #    ("a","b","c","d"),
-            #    ("a","b","c","d")
-            #]
         )
         MainApp.mytable.bind(on_check_press=self.checked)
         MainApp.mytable.bind(on_row_press=self.row_checked)
