@@ -61,10 +61,11 @@ class MainApp(MDApp):
         )
 
     def sort_on_name(self, data):
+        print(data)
         return zip(
             *sorted(
                 enumerate(data),
-                key=lambda l: l[1][3]
+                 key=lambda l: l[1][2]
             )
         )
 
