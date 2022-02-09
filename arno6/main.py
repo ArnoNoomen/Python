@@ -6,9 +6,10 @@ from kivymd.uix.screen import Screen
 from kivymd.uix.datatables import MDDataTable
 
 class MainApp(MDApp):
+
     def build(self):
         screen = Screen()
-        table = MDDataTable(
+        MainApp.mytable = MDDataTable(
             pos_hint = {'center_x': 0.5, 'center_y': 0.5},
             size_hint = (0.9, 0.6),
             check = TRUE,
@@ -23,17 +24,18 @@ class MainApp(MDApp):
                 ("a","b","c","d")
             ]
         )
-        table.bind(on_check_press=self.checked)
-        table.bind(on_row_press=self.row_checked)
-        screen.add_widget(table)
+        MainApp.mytable.bind(on_check_press=self.checked)
+        MainApp.mytable.bind(on_row_press=self.row_checked)
+        screen.add_widget(MainApp.mytable)
         self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "BlueGray"
         return screen
 
     def checked(self, instance_table, current_row):
-        print(instance_table)
+        rij = ("a2","b","c","d")
+        MainApp.mytable.row_data.append(rij)
 
     def row_checked(self, instance_table, instance_row):
-        print(instance_row)
+        pass
 
 MainApp().run()
