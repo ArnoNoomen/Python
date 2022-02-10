@@ -8,13 +8,21 @@ from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
 from kivy.network.urlrequest import UrlRequest
+import urllib.parse
 sys.path.insert(1, '../testbestanden')
 sys.path.insert(2, 'D:\\Github\\Python\\testbestanden')
 import variabelen
 
+def got_error(*args):
+    print(f'got_error {args[1]}')
+
+def got_failure(*args):
+    print(f'got_failure {args[1]}')
+
 def got_success(*args):
     try:
         for rij in args[1]['data']:
+            print(rij['product_id'])
             data1 = (0,rij['name'],rij['model'],rij['price'],rij['quantity'])
             MainApp.mytable.row_data.append(data1)
 
@@ -70,9 +78,12 @@ class MainApp(MDApp):
         )
 
     def addrow(*args):
-        print(variabelen.url1)
+        params = urllib.parse.urlencode({'@product_id': 49})
         UrlRequest(url=variabelen.url1,
+#                req_body=params,
                 on_success=got_success,
+                on_failure=got_failure,
+                on_error=got_error,
                 req_headers=variabelen.header1)
 
     def checked(self, instance_table, current_row):
