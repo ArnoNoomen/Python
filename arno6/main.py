@@ -78,6 +78,7 @@ class MainApp(MDApp):
         )
 
     def addrow(*args):
+        print(variabelen.url1)
         params = urllib.parse.urlencode({'@product_id': 49})
         UrlRequest(url=variabelen.url1,
 #                req_body=params,
