@@ -7,7 +7,7 @@ from kivy.lang.builder import Builder
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
-#from demo.demo import profiles
+from demo.demo import profiles
 
 Builder.load_file('story.kv')
 Builder.load_file('chat_list.kv')
@@ -47,6 +47,14 @@ class MainApp(MDApp):
             self.wm.add_widget(screen)
 
         return self.wm
+
+    def story_builder(self):
+        for profile in profiles:
+            self.story = StoryWithImage()
+            self.story.text = profile['name']
+            self.story.image = profile['image']
+            self.story.source = profile['source']
+            self.wm.screens[0].ids['story_layout']
 
 if __name__ == "__main__":
     MainApp().run()
