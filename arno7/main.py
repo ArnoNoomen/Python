@@ -1,13 +1,16 @@
+from ast import Str
 import kivy
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
-from kivy.properties import NumericProperty, StringProperty
+from kivy.properties import StringProperty, DictProperty, OptionProperty
 from kivy.lang.builder import Builder
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
+#from demo.demo import profiles
 
 Builder.load_file('story.kv')
+Builder.load_file('chat_list.kv')
 Window.size = (320, 600)
 
 class WindowManager(ScreenManager):
@@ -23,7 +26,9 @@ class StoryWithImage(MDBoxLayout):
 class ChatListItem(MDCard):
     text = StringProperty()
     source = StringProperty()
-
+    timestamp = StringProperty()
+    profile = DictProperty()
+    isread = OptionProperty(None, options=['deliverd', 'read', 'new', 'waiting'])
 
 class MainApp(MDApp):
     def build(self):
