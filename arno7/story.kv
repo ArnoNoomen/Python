@@ -1,0 +1,31 @@
+<StoryWithImage>:
+    orientation: 'vertical'
+    size: (dp(60), dp(60))
+    size_hint: None, None
+    spacing: dp(5)
+    width: avator.width
+    Avator:
+        id: avator
+        source: root.source
+        pos_hint: {'center_x': .5}
+    MDLabel:
+        text: root.text
+        size: self.texture_size
+        theme_text_color: 'Custom'
+        size_hint_y: None
+        halign: 'Center'
+        font_size: sp(9)
+        color: [1, 1, 1, 1]
+        bold: True
+
+<Avator@RelativeLayout>:
+    size: (dp(45), dp(45))
+    size_hint: None, None
+    source: rout.source
+    MDCard:
+        size: root.size
+        size_hint: None, None
+        radius: [30, 30, 30, 30]
+        md_bg_color: app.theme_cls.accent_color
+        elevation: 0
+        pos_hint: {'center_x': .5, 'center_y': .5}

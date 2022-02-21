@@ -2,6 +2,8 @@ import kivy
 from kivymd.app import MDApp
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.properties import NumericProperty, StringProperty
 
 Window.size = (320, 600)
 
@@ -10,6 +12,10 @@ class WindowManager(ScreenManager):
 
 class MessageScreen(Screen):
     pass
+
+class StoryWithImage(MDBoxLayout):
+    text = StringProperty()
+    source = StringProperty()
 
 class MainApp(MDApp):
     def build(self):
@@ -26,7 +32,7 @@ class MainApp(MDApp):
         self.wm = WindowManager(transition=FadeTransition())
         for screen in sreens:
             self.wm.add_widget(screen)
-            
+
         return self.wm
 
 if __name__ == "__main__":
