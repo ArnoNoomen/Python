@@ -19,12 +19,14 @@ class MainApp(MDApp):
         self.theme_cls.accent_hue = '400'
         self.title = 'WhatsApp Redesign'
 
-        sreeens = [
+        sreens = [
             MessageScreen(name='message')
         ]
 
         self.wm = WindowManager(transition=FadeTransition())
-
+        for screen in sreens:
+            self.wm.add_widget(screen)
+            
         return self.wm
 
 if __name__ == "__main__":

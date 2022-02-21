@@ -1,0 +1,13 @@
+<MessageScreen>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        md_bg_color: app.theme_cls.bg_normal
+        MDToolbar:
+            id: logoToolBar
+            height: 50
+            title: 'WhatsApp'
+            right_action_items: [['dots-veritcal', lambda x:x]]
+            margin: 0
+        ScrollView:
+            do_scroll_y: True
+            effect_cls: 'ScrollEffect'
