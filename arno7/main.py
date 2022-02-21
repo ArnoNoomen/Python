@@ -29,6 +29,7 @@ class ChatListItem(MDCard):
     timestamp = StringProperty()
     profile = DictProperty()
     isread = OptionProperty(None, options=['deliverd', 'read', 'new', 'waiting'])
+    friend_name = StringProperty()
 
 class MainApp(MDApp):
     def build(self):

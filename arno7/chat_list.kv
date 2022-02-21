@@ -1,0 +1,22 @@
+<ChatListItem>:
+    ripple_behavior: True
+    md_bg_color: 0, 0, 0, 0
+    elevation: 0
+    size_hint_y: None
+    padding: [10, 0, 10, 0]
+    Avatar:
+        id: chatAvatar
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: [0, 0, 0, 10]
+        spacing: 0
+        Label:
+            id: chatUsername
+            text: root.friend_name
+            theme_text_color: 'Custom'
+            size: self.texture_size
+            size_hint: None, None
+            font_size: 15
+            color: app.theme_cls.opposite_bg_normal
+            bold: True
+    MDBoxLayout:
