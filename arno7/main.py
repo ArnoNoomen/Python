@@ -57,5 +57,13 @@ class MainApp(MDApp):
             self.story.source = profile['source']
             self.wm.screens[0].ids['story_layout']
 
+    def chat_list_builder(self):
+        for profile in profiles:
+            for message in profile['msg']:
+                self.chatitem = ChatListItem()
+                self.chatitem.profile = profile
+                self.chatitem.friend_name = message['name']
+                self.chatitem.friend_avatar = message['image']
+
 if __name__ == "__main__":
     MainApp().run()
