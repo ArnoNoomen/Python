@@ -25,11 +25,13 @@ class StoryWithImage(MDBoxLayout):
 
 class ChatListItem(MDCard):
     text = StringProperty()
+    mssg = StringProperty()
     source = StringProperty()
     timestamp = StringProperty()
     profile = DictProperty()
     isread = OptionProperty(None, options=['deliverd', 'read', 'new', 'waiting'])
     friend_name = StringProperty()
+    friend_avatar = StringProperty()
 
 class MainApp(MDApp):
     def build(self):
@@ -64,6 +66,11 @@ class MainApp(MDApp):
                 self.chatitem.profile = profile
                 self.chatitem.friend_name = message['name']
                 self.chatitem.friend_avatar = message['image']
+
+                lastMessage, time, isRead, sender = message.split(';')
+                self.chatitem.mssg = lastMessage
+                self.chatitem.timestamp = time
+                self.chatitem.isread = isRead
 
 if __name__ == "__main__":
     MainApp().run()
