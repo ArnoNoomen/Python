@@ -71,6 +71,7 @@ class MainApp(MDApp):
                 self.chatitem.mssg = lastMessage
                 self.chatitem.timestamp = time
                 self.chatitem.isread = isRead
+            self.wm.screns[0].ids['chatTimeLine'].add_widget(self.chatitem)
 
 if __name__ == "__main__":
     MainApp().run()
