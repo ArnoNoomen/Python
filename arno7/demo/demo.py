@@ -12,17 +12,17 @@ chats = {
 anita = {
     "name": "Anita",
     "image": "assets/images/anita.jpg",
-    "active": False,
+    "active": True,
     "msg": chats["anita"]
 }
 jooyce = {
-    "name": "Jordan",
-    "image": "assets/images/16.jpg",
+    "name": "Jooyce",
+    "image": "assets/images/jooyce.jpg",
     "active": False,
     "msg": chats["jooyce"]
 }
 weeknd = {
-    "name": "Jordan",
+    "name": "Weeknd",
     "image": "assets/images/weeknd.jpg",
     "active": True,
     "msg": chats["weeknd"]

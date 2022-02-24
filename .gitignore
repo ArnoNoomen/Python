@@ -9,3 +9,7 @@ testbestanden/*
 .vscode/
 .vscode/*
 */testbestanden/*
+assets/
+assets/*
+*/assets/*
+
