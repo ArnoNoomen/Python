@@ -1,7 +1,7 @@
 {
-    "server": "smtp.ziggo.nl",
-    "pwd": "ROUJ#pWJQ;?GkGl4o'NoL$qXc:'*=,~F",
+    "server": "",
+    "pwd": "",
     "from": "arnonoomen@ziggo.nl",
     "port": "587"
-    
+
 }
