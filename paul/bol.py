@@ -1,7 +1,7 @@
 from calendar import Calendar
 from logging import root
 import os
-# paul
+# paulhh
 from tkinter import Widget
 from kivymd.app import MDApp
 from kivy.uix.boxlayout import BoxLayout
@@ -29,7 +29,7 @@ KV = """
 #:import Clock kivy.clock.Clock
 
 Screen:
-    
+
     MDToolbar:
         id: toolbar
         pos_hint: {"top": 1}
@@ -37,31 +37,31 @@ Screen:
         elevation: 0
         left_action_items: [["menu", lambda x: nav_drawer.set_state('toggle')]]
 
-    MDNavigationLayout:  
-        x: toolbar.height 
-         
+    MDNavigationLayout:
+        x: toolbar.height
+
         ScreenManager:
-            
+
             id: screen_manager
 
             Screen_inlog:
                 id: screen_inlog
                 name: 'inlog'
-                userId: user   
+                userId: user
                 BoxLayout:
-                    
+
                     orientation: 'vertical'
                     padding: 50
-                    
+
                     Widget:
-                     
+
                     MDIcon:
                         icon: 'account'
                         icon_color: 1, 0, 1, 1
                         font_size: 180
                         markup: True
                         halign: 'center'
-                    # MDTextFieldRound:    
+                    # MDTextFieldRound:
                     MDTextField:
                         id: user
                         focus: True
@@ -70,23 +70,23 @@ Screen:
                         helper_text_mode: "on_focus" # persitent verdwijnt text bij input
                         width: 20
                         font_size: 48
-                        # on_text_validate: screen_inlog.on_enter_user 
-                        
+                        # on_text_validate: screen_inlog.on_enter_user
+
                     MDTextField:
                         id: passwd
                         hint_text: "Password"
                         pos_hint: {"center_x": .5 }
                         width: 20
-                        font_size: 48           
+                        font_size: 48
                         password: True
-                        
+
                     BoxLayout:
                         orientation: 'horizontal'
                         padding: 20
                         Button:
                             text: 'OK'
                             size_hint_y: 1
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)             
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -125,7 +125,7 @@ Screen:
                             OneLineListItem:
                                 text: "Real-time count"
                             OneLineListItem:
-                                text: "LDA"           
+                                text: "LDA"
                             OneLineListItem:
                                 text: "Replenishment RT"
                             OneLineListItem:
@@ -133,9 +133,9 @@ Screen:
                             OneLineListItem:
                                 text: "Putaway CT"
                             OneLineListItem:
-                                text: "Picking CT"    
+                                text: "Picking CT"
                             OneLineListItem:
-                                text: "Palletisation"        
+                                text: "Palletisation"
 
                             # maak uitklap
                             # Putaway CT
@@ -146,11 +146,11 @@ Screen:
                             # Picking HCT
                             #         RT
                             #         RPT
-            
+
             Screen_receiving:
                 name: 'receiving'
                 id: screen_receiving
-            
+
                 BoxLayout:
                     orientation: 'vertical'
                     id: menuBox
@@ -162,14 +162,14 @@ Screen:
                         hint_text: "Receive number"
                         # pos_hint: {"center_x": .5 }
                         width: 20
-                        font_size: 48 
+                        font_size: 48
                         on_text_validate: screen_receiving.on_enter_receiveId
                     MDLabel:
                         text: "Receipts 0"
                         font_style: "H3"
                         size_hint_y: None
-                        height: '200dp'    
-                    
+                        height: '200dp'
+
                     Spinner:
                         id: spinner_dock
                         size_hint: 1,.3
@@ -189,8 +189,8 @@ Screen:
                     #         OneLineListItem:
                     #             text: "DOCK 125"
                     #         OneLineListItem:
-                    #             text: "DOCK 126"                
-                                    
+                    #             text: "DOCK 126"
+
                     BoxLayout:
                         orientation: 'horizontal'
                         padding: 20
@@ -207,7 +207,7 @@ Screen:
             Screen_article:
                 name:  'article'
                 id: screen_article
-            
+
                 BoxLayout:
                     orientation: 'vertical'
                     id: menuBox
@@ -226,9 +226,9 @@ Screen:
                         text: "Selected:"
                         font_style: "H4"
                         size_hint_y: None
-                        height: '260dp'    
-                        
-                              
+                        height: '260dp'
+
+
                     BoxLayout:
                         orientation: 'horizontal'
                         padding: 10
@@ -237,13 +237,13 @@ Screen:
                             size_hint_y: 1
                         Button:
                             text: 'List'
-                            size_hint_y: 1    
+                            size_hint_y: 1
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "articlelist"), .3)
                         Button:
                             text: 'Cancel'
                             size_hint_y: 1
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
-            
+
             Screen_articlelist:
                 name:  'articlelist'
                 id: screen_articlelist
@@ -253,7 +253,7 @@ Screen:
                     orientation: 'vertical'
                     id: menuBox
                     padding: 20
-                   
+
                     Widget:
                     # paul
                     ScrollView:
@@ -292,7 +292,7 @@ Screen:
                             size_hint_y: 1
                             text: 'Cancel'
                             size_hint_y: 1
-                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)    
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "menu"), .3)
 
             Screen_leeg: # dynamic screen
                 name:  'leeg'
@@ -317,29 +317,29 @@ Screen:
                     font_style: "Subtitle1"
                     size_hint_y: None
                     height: self.texture_size[1]
-              
+
                 ScrollView: # Hamburger menu
                     MDlist:
                         id: md_list
-                        
+
                         OneLineIconListItem:
                             text: "Info"
                             IconLeftWidget:
                                 icon: "information-outline"
-                                
+
                         OneLineIconListItem:
                             text: "Login"
                             on_release: Clock.schedule_once(lambda x: app.set_screen_nav(screen_manager, nav_drawer, "inlog"), .3)
                             IconLeftWidget:
                                 icon: "login"
-                                
+
                         OneLineIconListItem:
                             text: "Afsluiten"
                             on_release: exit()
                             IconLeftWidget:
                                 icon: "logout"
-                                    
-                              
+
+
 """
 
 class ContentNavigationDrawer(BoxLayout):
@@ -349,16 +349,16 @@ class Screen_inlog(Screen):
     userId = ObjectProperty()
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-         
+
         card = MDCard(orientation='vertical', pos_hint={
                         'center_x': .5, 'center_y': .5}, size_hint=(.9, .6))
 
         # self.add_widget(card)
 
     def handle_ok(self, screenLogin , manager, name_screen):
-        
+
         manager.current = name_screen
-        
+
         # if self.userId.text != 'admin':
         #     close_button = MDFlatButton (text="Close",on_press=Screen_inlog.close_dialog)
         #     more_button = MDFlatButton(text="More")
@@ -370,45 +370,45 @@ class Screen_inlog(Screen):
         #     dialog.open()
         # else:
         #     manager.current = name_screen
-    
+
     def close_dialog(self):
         # screen.dialog.dismiss()
-        self.parent.parent.parent.parent.dismiss() 
+        self.parent.parent.parent.parent.dismiss()
 
     def on_enter_user( self ):
-        pass    
-            
+        pass
+
 
 class Screen_articlelist(Screen):
    mylist = ObjectProperty()
    def __init__(self, **kwargs):
         super(Screen_articlelist,self).__init__(**kwargs)
-        
+
 class Screen_leeg(Screen):
     def __init__(self, **kwargs):
         super(Screen_leeg,self).__init__(**kwargs)
-        
+
         button = MDFlatButton( text='jaja',
                                on_press=self.doeiets
-        )  
-        
+        )
+
         card = MDCard(orientation='vertical', pos_hint={
                         'center_x': .5, 'center_y': .5}, size_hint=(.9, .75))
         box = BoxLayout( orientation='horizontal', padding=20)
-        self.add_widget(card)   
-        self.add_widget(box)   
+        self.add_widget(card)
+        self.add_widget(box)
         card.add_widget(button)
-      
-    
+
+
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
-        
+
         print ( args[1].parent )
-        button = MDFlatButton( text='Paulus')  
+        button = MDFlatButton( text='Paulus')
         obj = args[1].parent
         obj.add_widget(button)
-        
-    
+
+
 
 class Screen_menu(Screen):
 
@@ -416,10 +416,10 @@ class Screen_menu(Screen):
         super().__init__(**kwargs)
 
 class Screen_receiving(Screen):
-    
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-    
+
     def on_enter_receiveId( self ):
         pass
 
@@ -429,7 +429,7 @@ class Screen_article(Screen):
         super().__init__(**kwargs)
     def num(self, fieldobj):
         input = fieldobj.text
-        if len(input) and input[-1] not in ('0123456789'):        
+        if len(input) and input[-1] not in ('0123456789'):
             fieldobj.text = input.rstrip(input[-1])
 
 # class nodig voor hamburgermenu
@@ -441,12 +441,12 @@ class MDlist(MDList):
 #     def __init__(self, **kwargs):
 #         super().__init__(**kwargs)
 #         self.add_widget(TwoLineListItem( text= 'dynamic'))
-                   
+
 class MainApp(MDApp):
     userId = ObjectProperty()
     menuBoxObj = ObjectProperty()
     def build(self):
-        self.theme_cls.theme_style = "Light" 
+        self.theme_cls.theme_style = "Light"
         self.theme_cls.primary_palette = "Indigo"
         self.theme_cls.accent_palette = "Blue"
 
@@ -455,10 +455,10 @@ class MainApp(MDApp):
         sm.add_widget(Screen_menu(name='article'))
         sm.add_widget(Screen_menu(name='receive'))
         sm.add_widget(Screen_menu(name='leeg'))
-    
+
         screen = Builder.load_string(KV)
         # screen = Builder.load_file('bol.kv')
-     
+
         return screen
 
     def set_screen_nav(self, manager, nav_drawer, name_screen):
@@ -466,6 +466,6 @@ class MainApp(MDApp):
         nav_drawer.set_state("toggle")
     def set_screen(self, manager, name_screen):
         manager.current = name_screen
- 
+
 
 MainApp().run()
