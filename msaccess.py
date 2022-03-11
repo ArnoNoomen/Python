@@ -1,6 +1,13 @@
 import pyodbc
 
-conn = pyodbc.connect(r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=C:\\Users\\arnon\\Documents\\Abnamro\\BANK.accdb;')
+print(pyodbc.drivers())
+conn_str = (r'Driver={Microsoft Access Driver (*.mdb, *.accdb)};'
+            r'DBQ=C:\\Users\\arnon\\Documents\\Abnamro\\BANK.accdb;'
+            )
+conn_str = (r'DSN=arno;'
+            )
+print(conn_str)
+conn = pyodbc.connect(conn_str)
 cursor = conn.cursor()
 cursor.execute('select * from parameters')
 
