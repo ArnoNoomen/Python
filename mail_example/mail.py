@@ -5,6 +5,7 @@ import os
 import argparse
 import smtplib
 import json
+import dicttoxml
 from email import encoders
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
