@@ -406,7 +406,7 @@ class Screen_leeg(Screen):
                                on_press=self.zetfont
         )
         myList = []
-        self.web_request( myList )
+        #self.web_request( myList )
        
         mytable = MDDataTable(
                                 pos_hint={'center_x': 0.5, 'center_y': 0.5},
@@ -487,7 +487,7 @@ class Screen_leeg2(Screen):
 
         mylist = [ 'banaan', 'appel', 'kers']
         mylist.append("orange")
-        Screen_leeg.web_request( self, mylist)
+        #Screen_leeg.web_request( self, mylist)
         # Creating a Simple List
         
         scroll = ScrollView()
