@@ -12,17 +12,24 @@ config = {
 class App:
 
     @cherrypy.expose
+    def hello(self):
+        try:
+            apikey = cherrypy.request.headers['api-key']
+        except KeyError:
+            apikey = ""
+        if apikey == '2b230ad96f21329b24ead2fc48cb451644631c4e':
+            if cherrypy.request.method == 'GET':
+                 return "{'data:', 'GET'}"
+            if cherrypy.request.method == 'POST':
+                 return "{'data:', 'POST'}"
+            return "{'error:', 'invalid method'}"
+        else:
+            return "{'error:', 'invalid key'}"
+
+    @cherrypy.expose
     def upload(self, ufile):
-        # Either save the file to the directory where server.py is
-        # or save the file to a given path:
-        # upload_path = '/path/to/project/data/'
         upload_path = os.path.dirname(__file__)
-
-        # Save the file to a predefined filename
-        # or use the filename sent by the client:
-        # upload_filename = ufile.filename
         upload_filename = 'saved.txt'
-
         upload_file = os.path.normpath(
             os.path.join(upload_path, upload_filename))
         size = 0
