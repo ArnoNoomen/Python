@@ -29,6 +29,7 @@ from kivy.metrics import dp
 
 # Urls kivy': en cursussen
 # Layout: https://kivy.org/doc/stable/guide/widgets.html#
+# icons   https://materialdesignicons.com/
 # course: https://www.udemy.com/user/johnelder3/
 # course: https://www.udemy.com/course/kivy-mobile-app/learn/lecture/7865250?components=available_coupons%2Cbuy_button%2Cbuy_for_team%2Ccacheable_add_to_cart%2Ccacheable_buy_button%2Ccacheable_deal_badge%2Ccacheable_discount_expiration%2Ccacheable_price_text%2Ccacheable_purchase_text%2Ccurated_for_ufb_notice_context%2Cdeal_badge%2Cdiscount_expiration%2Cgift_this_course%2Cincentives_context%2Cinstructor_links%2Clifetime_access_context%2Cmoney_back_guarantee%2Cprice_text%2Cpurchase_tabs_context%2Cpurchase%2Crecommendation%2Credeem_coupon%2Csidebar_container%2Csubscribe_team_modal_context%2Ctop_companies_notice_context#overview
 # course: https://www.udemy.com/course/kivymd-python-build-mobile-apps-using-material-design/learn/lecture/28108484#overview
@@ -101,7 +102,7 @@ Screen:
                             font_size: "24sp"
                             text: 'OK'
                             pos_hint: {"center_x": .5 }
-                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "leeg2"), .3)
+                            on_press: Clock.schedule_once(lambda x: screen_inlog.handle_ok(screen_inlog, screen_manager, "menu"), .3)
             Screen_menu:
                 name: 'menu'
                 id: screen_menu
@@ -112,12 +113,32 @@ Screen:
                     id: menuBox
                     padding: 20
                     Widget:
-                    MDTextField:
-                        id: searchmenu
-                        icon_right: "text-search"
-                        hint_text: "Search menu"
-                        font_size: "24sp"
-                        width: 20
+                    # MDTextField:
+                    #     id: searchmenu
+                    #     icon_right: "text-search"
+                    #     hint_text: "Search menu"
+                    #     font_size: "24sp"
+                    #     width: 20
+
+                    # MDIcon:
+                    #     icon: 'barcode-scan'
+                    #     icon_color: 1, 0, 1, 1
+                    #     markup: True
+                    #     halign: 'center'
+                    #     font_size: "128sp"
+                    #     pos_hint: {"center_x": .5, "center_y": 1}
+                       
+                    BoxLayout:
+                        orientation: 'vertical'
+                        padding: 0
+                        spacing: 30
+                        pos_hint: {"center_x": .5, "center_y": 9}
+                        MDRoundFlatIconButton:
+                            text: 'Receiving'
+                            icon: 'barcode'
+                            size: "400dp", "400dp"
+                            on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "receiving"), .3)
+                       
 
                     ScrollView:
                         size_hint: None, None
@@ -129,38 +150,30 @@ Screen:
                             OneLineListItem:
                                 text: "Receiving"
                                 on_release: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "receiving"), .3)
-                            OneLineListItem:
-                                text: "Picking Mini PickBatches"
-                            OneLineListItem:
-                                text: "Unloading LCL"
-                            OneLineListItem:
-                                text: "Relocate RCT"
-                            OneLineListItem:
-                                text: "Relocate RPT"
-                            OneLineListItem:
-                                text: "Real-time count"
-                            OneLineListItem:
-                                text: "LDA"
-                            OneLineListItem:
-                                text: "Replenishment RT"
-                            OneLineListItem:
-                                text: "New item procedure"
-                            OneLineListItem:
-                                text: "Putaway CT"
-                            OneLineListItem:
-                                text: "Picking CT"
-                            OneLineListItem:
-                                text: "Palletisation"
-
-                            # maak uitklap
-                            # Putaway CT
-                            #         TR
-                            #         EPT
-                            #         RPT
-                            #         NCK Returns
-                            # Picking HCT
-                            #         RT
-                            #         RPT
+                            
+                            # OneLineListItem:
+                            #     text: "Picking Mini PickBatches"
+                            # OneLineListItem:
+                            #     text: "Unloading LCL"
+                            # OneLineListItem:
+                            #     text: "Relocate RCT"
+                            # OneLineListItem:
+                            #     text: "Relocate RPT"
+                            # OneLineListItem:
+                            #     text: "Real-time count"
+                            # OneLineListItem:
+                            #     text: "LDA"
+                            # OneLineListItem:
+                            #     text: "Replenishment RT"
+                            # OneLineListItem:
+                            #     text: "New item procedure"
+                            # OneLineListItem:
+                            #     text: "Putaway CT"
+                            # OneLineListItem:
+                            #     text: "Picking CT"
+                            # OneLineListItem:
+                            #     text: "Palletisation"
+                            
 
             Screen_receiving:
                 name: 'receiving'
@@ -198,6 +211,7 @@ Screen:
                         spacing: 10
                         MDRectangleFlatIconButton:
                             text: 'OK'
+                            icon: 'barcode'
                             on_press: Clock.schedule_once(lambda x: app.set_screen(screen_manager, "article"), .3)
                         MDRectangleFlatIconButton:
                             text: 'Cancel'
@@ -440,8 +454,7 @@ class Screen_leeg(Screen):
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
         sm.current = 'leeg2'
-
-    
+  
     def zetfont( *args, **kwargs ):
         pass
 
@@ -470,8 +483,6 @@ class Screen_leeg(Screen):
             mylist.append ( myset )
 
         print(mylist)
-
-           
 
 class Screen_leeg2(Screen):
     pass
@@ -512,10 +523,6 @@ class Screen_leeg2(Screen):
     def doeiets( *args, **kwargs ):
         sm = args[1].parent.parent.parent
         sm.current = 'leeg2'    
-
-
-
-
 
 class Screen_menu(Screen):
 
